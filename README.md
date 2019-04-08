@@ -55,4 +55,6 @@ go to www.CrackingTheCodingInterview.com to download the complete solution.
 
 (And the rest like Object-oriented and recursion and dynamic programming is at the last end of the to-do queue here)
 
+(Also, need to wait for the book to deliver to me)
+
 
