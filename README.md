@@ -53,6 +53,6 @@ go to www.CrackingTheCodingInterview.com to download the complete solution.
 
 (And of course need to figure out Tree and Graph, go through textbook to figure it out)
 
-(And the rest like Object-oriented and recursion and dynamic programming is not at the last end of the to-do queue here)
+(And the rest like Object-oriented and recursion and dynamic programming is at the last end of the to-do queue here)
 
 
