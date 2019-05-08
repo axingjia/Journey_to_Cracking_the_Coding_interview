@@ -193,3 +193,7 @@ Question 2
     
 MY: I did the staircase, n==0 should be n<=1; fun2(8) print out 100;
 
+MY: Okay, reading and intepretating seems to be no problem, but writing one that is a lot of problem. Where can I practice it?
+
+Okay I find this link. This is perfect. [Link](https://www.geeksforgeeks.org/recursion-practice-problems-solutions/)
+
