@@ -197,3 +197,16 @@ MY: Okay, reading and intepretating seems to be no problem, but writing one that
 
 Okay I find this link. This is perfect. [Link](https://www.geeksforgeeks.org/recursion-practice-problems-solutions/)
 
+### Recursive Functions 
+SKIM, nothing useful
+
+### Tail Recursion 
+Nothing useful
+
+Dive straight to the problem: [recursive palindrome](https://www.youtube.com/watch?v=7uu8WfDdsRc)
+
+[recursion countdown](https://www.youtube.com/watch?v=FCGF7YB6g-4&list=PLGSxjw5t3yJs4i3RONXvShSnXflLp5fXS&index=2)
+
+
+
+
