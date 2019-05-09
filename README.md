@@ -207,7 +207,7 @@ Dive straight to the problem: [recursive palindrome](https://www.youtube.com/wat
 
 [recursion countdown](https://www.youtube.com/watch?v=FCGF7YB6g-4&list=PLGSxjw5t3yJs4i3RONXvShSnXflLp5fXS&index=2)
 
-Sometime geekforgeek's question is too hard and unrelated, so I just do a loop from ctci->DS->geekforgeek->ctci;
+Sometime geekforgeek's question is too hard and unrelated, so I just do a loop from ctci->DS->geekforgeek->ctci; thats why I need all three to be able to study it effectively
 
 
 
