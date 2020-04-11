@@ -158,17 +158,228 @@ void reverse(int[] array){
 * So, in conclusion, O(asLogs+asLoga)
 
 #### Example 9
+* This is a balanced binary search tree 
 
-page 49
+	int sum(Node node){
+		if (node==null){
+			return 0;
+		}
+		return sum(node.left)+node.value+sum(node.right)
+	}
+	
+* Just because it's a binary search tree doesn't mean that there is a log in it 
+* The most straightforward way is to think about what this means. This code touches each node in the tree once and does a constant time amount of work with each "touch"
+* Therefore, the runtime will be linear in terms of number of nodes. So O(N)
+* Recursive pattern 
+* On page 44, we discuss a pattern for the runtime of recursive functions that have multiple branches. There are two branches at each call, so we're looking at O(2^depth)
+* At this point many people might assume that something went wrong since we have an exponential algorithm--that something in our logic is flawed or that we've inadventently created an exponential time algorithm (yikes!)
+* The second statement is correct. We do have an exponential time algorithm, but it's not as bad as one might think.
+* What is depth. The tree is a balanced binary search tree. Therefore, if there are N total nodes, then dept is roughly logN.
+By equation above, we get O(2^(logN))
+* recall that 2^p=Q  ->  log(2)Q=P
+* What is 2^(logN)???
+* let P=2^(logN). By definition, we can write this as Log(2)P=Log(2)N. This means that P=N
+* Let P=2^(logN)
+* log(2)P=Log(2)N
+* P=N
+* 2^(logN)=N
+* Therefore, it is O(N)
+
+#### Example 10
+
+	boolean isPrime(int n){
+		for (int x=2;x*x<=n;x++){
+			if(n%x==0){
+				return false;
+			}
+		}
+		return true
+	}
+
+* result is O(sqrt(N)), easy
+
+#### Example 11
+
+	int factorial(int n){
+		if (n<0){
+			return -1;
+		}else if (n==0){
+			return 1;
+		}else {
+			return n*factorial (n-1);
+		}
+	}
+	
+* This is a straight recursion from n to n-1 to n-2 down to 1. it will take O(n) time
+
+#### Example 12 
+
+	void permutation(String str){
+		permutation(str,"");
+	}
+	void permutation(String str, String prefix){
+		if (str.length()==0){
+			System.out.println(prefix);
+		}else{
+			for (int i=0;i<str.length();i++){
+				String rem=str.substring(0,i)+str.substring(i+1);
+				permutation(rem,prefix+str.charAt(i))
+			}
+		}
+	}
+
+* MY: This algorithm finds out how many permutation there is
+* This is a (very) tricky one. We can think about this by looking at how long each call takes (excluding the recursion piece) and how many times permutation gets called. We'll aim for getting as tight of an upper bound as possible
+* Executing line 7 (System.out.println(prefix);)takes O(n) time since each character needs to be printed
+* line 10 and line 11 (String rem=str.substring(0,i)+str.substring(i+1);permutation(rem,prefix+str.charAt(i)))
+ will also take O(n) time combined, due to the string concatenation. Observe that the sum of the lengths of rem, prefix, and str.charAt(i) will always be n
+* Each node in our call tree therefore corresponds to O(n) work
+* How many times does the function get called?
+* How many leafs nodes are there. This is simply the number of permutation. We branch 4 times at the root, then 3, then 2, then 1. This gives us 4*3*2*1 leaf nodes. Or, expressed more generically, n! permutation.
+* How many total nodes are there? Each leaf node is attached to a path with n nodes. So at most, there are n*n! total nodes in the tree.
+* The total runtime therefore is (at worst) O(n*n*n!). 
+* Advanced: O(e*n!), SKIM
+
+#### Example 13
+
+	int fib(int n){
+		if (n<=0) return 0;
+		else if (n==1) return 1;
+		return fib(n-1)+fib(n-2)
+	}
+	
+* We can use the earlier pattern we'd established for recursive call: O(branch^depth)
+* There are 2 branches per call, and we go as deep as N, therefore the runtime is O(2^N).
+* MY: What??
+fib(4)    
+	->fib(3)+fib(2)
+	->fib(2)+fib(1)+(fib(1)+0)
+	->fib(1)+fib(0)+0
+	->1+0+0+1+0
+	
+* Refer to [Recursive Runtime], O(2^0+2^1+2^2+2^3)=O(2^n-1)
+
+#### Example 14
+	void allFib(int n){
+		for( int i=0;i<n;i++){
+			System.out.println(i+":"+fib(i));
+		}
+	}
+	
+	int fib(int n){
+		if (n<=0) return 0;
+		else if (n==1) return 1;
+		return fib(n-1)+fib(n-2);
+	}
+* many people rush to O(n*2^n)
+* Not so fast. The error is that the n is changing. yes fib(n) tkaes O(2^n), but it matters what the value of n is.
+
+	fib(1)->2^1 steps
+	fib(2)-> 2^2 steps
+	fib(3)-> 2^3 steps
+	fib(4)-> 2^4 steps
+	...
+	fib(n)->2^n steps
+* therefore, 2^1+2^2+2^3+2^4+...+2^n
+* based on what we showed on page 45, this is 2^(n+1)-2. Therefore, the runtime to compute the first n fibonacci numbers is still O(2^n)
+
+#### Example 15
+* The following code prints all Fibonacci numbers from 0 to n. However, this time, it stores(ie. caches) previously computed values in an integer array. If it has already been computed, it just returns the caches. What is its runtime?
+
+	void allFib(int n){
+		int[] memo=new int[n+1];
+		for (int i=0; i<n;i++){
+			System.out.println(i+": "+fib(i,memo));
+		}
+	}
+	
+	int fib(int n, int[] memo){
+		int (n<=0) return 0;
+		else if(n==1) return 1;
+		else if (memo[n]>0) return memo[n];
+		memo[n]=fib(n-1,memo)+fib(n-2,memo);
+		return memo[n];
+	}
+	
+	fib(0)-> return 0
+	fib(1) -> return 1
+	fib(2)
+		fib(1) ->return 1
+		fib(0) -> return 0
+		store 1 at memo[2]
+	fib(3)
+		fib(2) ->lookup memo[2]->return 1
+		fib(1) ->return 1
+		store 2 at memo[3]
+	fib(4)
+		fib(3)->lookup memo[3]->return 2
+		fib(2)->lookup memo[2] ->return 1
+		store 3 at memo[4]
+	fib(5)
+		fib(4)->lookup memo[4]->return 3
+		fib(3)->lookup memo[3]->return 2
+		store 5 at memo[5]
+	...
+
+* At each call to fib(i), we have alrady computed and stored the values for fib(i-1) and fib(i-2). We just look up those values, sum them, store the new result, and return. This takes a constant amount of time.
+* We are doing a constant amount of work n times, so this is O(N) time
+* *This technique, called memorization, is a very common one to optimize exponential time recursive algorithm*
+
+#### Example 16
+
+	int powerOf2(int n){
+		if (n<1){
+			return 0;
+		}else if(n==1){
+			System.out.println(1);
+			return 1;
+		}else{
+			int prev=powerOf2(n/2);
+			int curr=prev*2;
+			System.out.println(curr);
+			return curr;
+		}
+	}
+
+	MY: power(4)
+	->power(2)
+	->power(1)
+	->return
+	so it is O(logN) correct!
+
+* Rate of increase: SKIP
+
+## Additional problem
+* VI.1: MY: O(b) CORRECT
+* VI.2: MY: 
+
+	power(4,3)
+	-> a* power(a,2)
+	-> a* a* power(a,1)
+	-> a*a*a*power(a,0)
+	O(b)  CORRECT 
+* VI.3: MY: O(1). [CORRECT], but the code is interesting. Record:
+
+	int mod(int a, int b){
+		if(b<=0){
+			return -1;
+		}
+		int div=a/b;
+		return a-div*b;
+	}
+	
+* VI.4: O(a/b)  CORRECT
+* VI.5: SKIP
+
 
 ### chapter 7: Technical Question
 * Don't read question and answer, try to do it
 * Advanced: write the code on paper.
 * Test your code 
-* Type your apper code as-is into a computer
+* Type your paper code as-is into a computer
 * try to do as many mock interviews as possible
 
-As for Data Structure, you are usually only expected to basics. Here are teh absolute, must have knowledge:
+As for Data Structure, you are usually only expected to basics. Here are teh absolute, must-have knowledge:
 
 * Linked Lists
 * Tree, Tries, Graphs
@@ -187,13 +398,22 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 * Dynamic Programming
 * Big O TIme & space
 
-Make sure you know how to use them and implement them
+* Make sure you know how to use them and implement them
+* Practice implementing the data structures (on paper, then on computer)
+* In particular, hash tables are an extremely important topic.
+* **A good way to find things quickly is using a hashtable**
 
-Practice implementing the data structures (on paper, then on computer)
+### Step 1: Listen carefully
+* make sure you hear the problem correctly
+* You do want to ask questions about anything you're unsure about.
+* For example, "Given two array that are sorted, find"... you probably need to know that the data is sorted. The optimal algorithm for the sorted situation is probably different than the optimal algorithm for the unsorted situation.
+* Example 2, "Design an algorithm to be run repeatedly on a server that". The server/to-be-run-repeatedly situation is different from the run-once situation. Perhaps this means that you *cache data*? Or perhaps it justifies some reasonable precomputation on the initial dataset?
+* many candidates will hear the problem correctly. But ten minutes into developing an algorithm, some of the key details of the problem have been forgotten. Now they are in a situation where they actually can't solve the problem optimally.
+* You might even find it useful to write the pertinent information on the whiteboard
 
-In particular, hash tables are an extremely important topic.
+### Draw an Example
 
-**A good way to find things quickly is using a hashtable**
+page 64
 
 ## Chapter 11 Interview Questions
 
