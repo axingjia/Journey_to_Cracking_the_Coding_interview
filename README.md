@@ -412,8 +412,85 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 * You might even find it useful to write the pertinent information on the whiteboard
 
 ### Draw an Example
+* An example can dramatically improve your ability to solve an interview question, and yet so many candidates just try to solve the questino in their head 
+* For example, when drawing an binary search tree, don't just try 2 levels, and don't leave the value empty. And don't try a perfect tree(the last level is all filled up)
 
-page 64
+### State a brute force algorithm 
+* State a brute force. Some candidate don't state the brute force because they think it's both obvious and terrible. But state it anyways, it might be obvious for you, but it is not necessarily obvious for all candidates. You don't want your interviewer to think that you're struggling to see even the easy solution
+
+### 4. Optimize 
+* Once you have a brute force algorithm, you should work on optimizing it. A few techniques that work well are: 
+* 1. Look for unused information. Did you interviewer tell you that the array was sorted? How can you leverage that information 
+* 2. Use a fresh example. Sometimes, just seeing a different example will unclog your mind or help you see a pattern in the problem
+* 3. Solve it "incoorectly". SKIP
+* 4. Make time vs space tradeoff.
+* 5. Precompute information
+* 6. Use a hash table.
+* Think about the best conceivable runtime.
+
+### 5. Walk Through 
+* Test and fix bugs 
+
+### 6. Implement 
+* Write them down. 
+* Modularized code
+* error checks
+* use other classes/structs where appropriate.
+* Good variable names 
+
+### 7. Test 
+* Start with a "conceptual" test
+* weird looking code like x=length-2
+* hot spot. Ex: base case in recursive code, integer division, null node in binary tree, the start and end of iteratino through a linked list
+* small test cases
+* special cases. Test your code against null or single element values, the extreme cases, and other speical cases.
+
+### Optimize & Solve Technique #1: Look for BUD 
+* Bottleneck, unnecessary work, duplicate work
+* if we sort an array, then find element will be O(logN)
+
+##### Unnecessary Work
+* from: 
+	
+	n=1000
+	for a from 1 to n 
+		for b from 1 to n
+			for c from 1 to n
+				for d from 1 to n
+					if a^3+a^3==c^3+d^3
+						print a,b,c,d
+
+* To:
+	
+	n=1000
+	for a from 1 to n 
+		for b from 1 to n
+			for c from 1 to n
+				d=pow(a^3+b^3-c^3,1/3);//will rount to int
+				if a^3+a^3==c^3+d^3 && 0<d && d<=n
+					print a,b,c,d
+	
+* This goes from O(n^4) to O(N^3)
+
+#### Duplicate Work 
+* Why do we keep on computing all (c,d) for each (a,b) pair? We should just create the list of (c,d) pair once 
+
+	n=1000
+	for c from 1 to n
+		for d from 1 to n
+			result = c^3+d^3
+			append (c,d) to list at value map[result]
+			
+	for each result, list in map 
+		for each pair1 in list 
+			for each pair2 in list 
+				print pair1, pair2
+
+#### Optimize & Solve Techniques #2: DIY
+* SKIP
+
+
+page 70
 
 ## Chapter 11 Interview Questions
 
