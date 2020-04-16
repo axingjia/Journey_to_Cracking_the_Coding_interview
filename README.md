@@ -489,24 +489,329 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 #### Optimize & Solve Techniques #2: DIY
 * SKIP
 
+#### Optimize & Solve Technique #3: Simplify and Generalize
+* SKIP
 
-page 70
+#### Optmize & Solve Technique #4: Base Case and Build 
+* With Base Case and Build, we solve the problem first for a base case and then try to build up from there. When we get to more complex/interesting cases, we try to build those using the prior solutions.
+* Example: Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
+* consider a test string abcdefg
 
-## Chapter 11 Interview Questions
+	case "a" -> {"a"}
+	case "ab" ->{"ab","ba"}
+	case "abc" -> ?
+	
+	P("abc") =insert "c" into all location of all strings in P("ab")
+	P("abc") = insert "c" into all locations of all strings in {"ab","ba"}
+	P("abc") ...
+	
+* Now that we understand the pattern, we can develop a general recursive algorithm. We generate all permutations of string s(1)...s(n) by "chopping off" the last character and generating all permutations of s(1)...s(n-1). Once we have the list of all permutations of S(1)...s(n-1), we iterate through this list. For each string in it, we insert Sn of the string.
 
-go to www.CrackingTheCodingInterview.com to download the complete solution.
+#### Optimize & Solve Technique #5: Data Structure Brainstorm
+* This approach is certainly hacky, but it often works. We can simply run through a list of data structures and try to apply one. This approach is useful because solving a problem may be trivial once it occurs to use to use, say, a tree 
+* Example: numbers are randomly generated and stored into an expanding array. how would you keep track of the median.
+* Our data structure brainstorm might look like the following:
+* Linked list? probably not. Linked lists tend not to do very well with accessing and sorting numbers 
+* Array? Maybe, but already have an array. Could you somehow keep the elements sorted? That's probably expensive.
+* Binary tree? This is possible, since binary trees do fairly well with ordering. in fact, if the binary search tree is perfectly balance, the top might be the median. But, be careful--if there's an even number of elements, the median is actually the average of the middle two elements. The middle two elements can't both be at the top. This is probably a workable algorithm, but let's come back to it
+* Heap. A heap is really good at basic ordering and keep track of max and min. This is actually interesting--if you have two heaps, you could keep track of the bigger half and the smaller half the elements. The bigger half is kept in a min heap, such that the smallest element in the bigger half is at the root. The smaller half is kept in a max help, such the the biggest element of the smaller half is at the root. Now, with these data structure, you have the potential median elements at the roots. If the heaps are not longer the same size, you can quickly "rebalance" the heap by popping an element off the one heap and push it onto the other.
 
-* StringBuilder avoid the problem of iterative string concatanation
+### Best Conceivable Runtime
+* One way BCR can be useful: we can use the runtimes to get a "hint" for what we need to reduce.
+* Example: Find common numbers in two arrays 
+* BCR is 2N. So the best conceivable runtimes is O(N)
+* Any precomputation that's O(N) or less is "free"
+* In this case, we can just throw everything in B into a hash table. This will take O(N) time. Then we just go through A and look up each element in the hash table. This loop up (or search) is O(1), so our runtime is O(N)
+* Suppose our interviewer hits us with a question that makes us cringe: Can we do better
+* No, not in terms of runtime. We have achiebved the fastest possible runtime, therefore we can not optimize the big O time. We could potentially optimiz the space complexity.
+* *This is another place where BCR is useful. It tells us that we are "done" in terms of optimizing the runtime, and we should therefore turn our efforts to the space complexity*
+* in fact, even without the interviewer prompting us, we should have a question mark with respect to our algorithm. We would have achieved the exact same runtime if the data wasn't sorted. So why did the interviewer give us sorted arrays? That's not unheard of, but it is a bit strange 
+* We are now looking for an algorithm that: Operating in O(1) space (probably). We already have an O(N) space algorithm with optimal runtime. If we want to use less additional space, that probably means no additional space. Therefore, we need to drop the hash table 
+* Operates in O(N) time(probably). We'll probably want to at least match the current best runtime, and we know we can't beat it 
+* use the fact that the arrays are sorted.
+* Our best algorithm that doesn't use extra space was the binary search one. Let's think about optimizing that. We can try walking through the algorithm.
+* Think about BUD. The bottleneck is the searching. Is there anything unnecessary or duplicated?
+* It is unnecessary that A[3]=40 searched over all of B. We know that we just found 35 at B[1], so 40 certainly won't be before 35.
+* Each binary search should start where the last one left off 
+* in fact, we don't need to do a binary search at all now. We can just do a linear search. As long as the linear search in B is just picking up where the last one left off, we know that we're going to be operating in linear time
+* This algoritm is very similar to merging two sorted arrays. It operates in O(N) time and O(1) space 
+* We have now reached the BCR and have minimal space. We know that we can not do better 
+* This is another way we can use BCR. If you ever reach the BCR and have O(1) additional space, then you know that you can't optimize the big O time or space 
+* Best Conceivable Runtime is not a "real" algorithm concept, in that you won't find it in algorithm textbooks. But I have found it personally very useful, when solving problem myself, as well as while coaching people through problems.
 
-(A bit of digression here. Need to dive deeper into linkedList and other data structure. By just reading the code isn't not getting into my brain.I think the reason why it's not getting into me is I don't fully understand the steps, even though I read it and understand it. Well, I just need to implement it with psuedo code myself and then check it. Probably will give it half an hour for this purpose)
+### Handling Incorrect Answers
+* SKIM
 
-(Also need to watch videos on Bit Manipulation, need to watch some videos about it)
+### When You've Heard a Question Before 
+* SKIM
 
-(And of course need to figure out Tree and Graph, go through textbook to figure it out)
+### The "Perfect" Language for Interviews 
+* Some of the verbosity of Java can be reduced by abbreviating
 
-(And the rest like Object-oriented and recursion and dynamic programming is at the last end of the to-do queue here)
+### What Good Codinng Looks Like
+* Correct 
+* Efficient
+* Simple 
+* Readable 
+* Maintainable
 
-(Also, need to wait for the book to deliver to me)
+### Use Data Structure Generously 
+* Suppose you were asked to write a function to add two simple mathematical expressions which are of the form Ax^a+Bx^b+...
+
+	Class ExprTerm{
+		double coeffient;
+		double exponent;
+	}
+	
+	ExprTerm[] sum(ExprTerm[] expr1, ExprTerm[] expr2){
+		...
+	}
+
+### Appropriate Code Reuse 
+* Sidetacked, cool code:
+
+	int convertFromBase(String number, int base){
+		if ( base<2 || (base>10 && base!=16)) return -1;
+		int value=0;
+		for (int i=number.length()-1;i>=0;i--){
+			int digit=digitToValue(num.charAt(i));
+			if (digit<0 || digit >=base){
+				return -1;
+			}
+			int exp=number.length-1-i;
+			value+=digit*Math.pow(base,exp);
+		}
+		return value;
+	}
+	
+### Modular 
+* SKIP
+
+### Flexible
+* Just because your interviewer only asks you to write code to check if a normal tic-tac-toe board has a winner, doesn't mean you msut assume that it's a 3x3 board. Why not write the code in a more general way that implements it for an NxN board?
+
+### Error checking 
+* IMPORTANT
+
+# Chapter 8: The offer and Beyond
+page 75
+
+# Chapter 11 Interview Questions
+
+## 1. Array and String 
+* Hashtable implementation: SKIM
+* ArrayList & Resizable Array: In some languages, array are automatically resizable. The array or list will grow as you append items. In other languages, like Java, the array's size can't change after its creation.
+* StringBuilder: when you concatenate string, it creates new string. Instead, use StringBuilder
+
+	//from 
+	String joinWords(String[] words){
+		String sentence= "";
+		for (String w: words){
+			sentence=sentence+w;
+		}
+		return sentence;
+	}
+	
+	//to
+	String joiWords(String[] words){
+		StringBuilder sentence=new StringBuilder();
+		for(String w: words){
+			sentence.append(w);
+		}
+		return sentence.toString();
+	}
+* Addtional Reading: Hash Table Collision Resolution, Rabin-karp Substring Search
+
+## Interview Question 
+
+### 1.1. Is Unique:
+
+	public static void main(String[] args) {
+        if(check("abcdeg")){
+            System.out.println("unique");
+        }else{
+            System.out.println("not unique");
+        }
+    }
+    static boolean check(String s){
+        ArrayList<Character> array=new ArrayList<>();
+        for (int i=0;i<s.length();i++){
+            for(int j=0;j<array.size();j++){
+                if(array.get(j)==s.charAt(i)){
+                    return false;
+                }
+
+            }
+            array.add(s.charAt(i));
+        }
+        return true;
+    }
+	
+* MY runtime O(N^2) where N is the length, but amortized, CORRECTED: THIS IS NOT AMORTIZED. its just 2 loop
+* Tip 1: use a hashtable; so the searching can go from O(N) to O(1); so the result will be O(N)
+* best conceivable is O(N)
+* https://www.geeksforgeeks.org/determine-string-unique-characters/
+* O(nLogn), sort is nlogn, check is n
+
+boolean uniqueCharacters(String str) 
+    { 
+        char[] chArray = str.toCharArray(); 
+  
+        // Using sorting 
+        // Arrays.sort() uses binarySort in the background 
+        // for non-primitives which is of O(nlogn) time complexity 
+        Arrays.sort(chArray); 
+  
+        for (int i = 0; i < chArray.length - 1; i++) { 
+            // if the adjacent elements are not 
+            // equal, move to next element 
+            if (chArray[i] != chArray[i + 1]) 
+                continue; 
+  
+            // if at any time, 2 adjacent elements 
+            // become equal, return false 
+            else
+                return false; 
+        } 
+        return true; 
+    } 
+
+
+page 90
+
+### Check Permutation
+
+	//check the whole array, if there is, remove it, if there isn't, then its not permutation
+    //check the whole array b with first character of array a, go through the whole array b, if there is, remove it, and
+    //go to the second character of array b, if there isn't then its not a permutation
+    //when the whole array b is check, and nothing happen, then its true
+    //if there isn't: if checking the the first element of array b, and check the last element of array a, and can't find it
+    //
+    /* abc
+    bca
+    for i
+
+     * /
+    static boolean check(String a, String b){
+        if(a.length()!=b.length()) return false;
+        char[] aArray=a.toCharArray();
+        ArrayList<Character> array= new ArrayList<>();
+        for(int aa=0;aa<aArray.length;aa++){
+            array.add(aArray[aa]);
+        }
+        for(int i=0;i<b.length();i++){
+            for (int j=0;j<array.size();j++){
+                System.out.println(array.size());
+                if(array.get(j)==b.charAt(i)){
+                    array.remove(j);
+                    break;
+                }
+                if((j==array.size()-1)&&(array.get(j)!=b.charAt(i))){
+                    return false;
+                }
+            }
+
+        }
+        return true;
+    }
+
+* This is brute force again
+* It is O(N^2)
+* Checked the second hint, I can use a hash table, it will become O(N)
+* Check solution: sorting is the simplest. Will take O(NlogN+N)=O(NlogN)
+
+### URLify 
+
+	public static String convert(String s){
+        String t=s.trim();
+        char[] charArray=t.toCharArray();
+        ArrayList<String> array=new ArrayList<>();
+        for (int j=0;j<charArray.length;j++){
+            System.out.println(String.valueOf(charArray[j]));
+            array.add(String.valueOf(charArray[j]));
+        }
+        for(int i=0; i<array.size();i++){
+            if (array.get(i).equals(" ")){
+                array.set(i,"%20");
+                System.out.println("this is in");
+            }
+        }
+        StringBuilder sb=new StringBuilder();
+        for (int k=0;k<array.size();k++){
+            sb.append(array.get(k));
+        }
+        return sb.toString();
+    }
+	
+* It is O(N)
+* checking hint now
+* Check solution now. The solution use only char array and do manipulate the char array directly.
+
+	static char[] replaceSpace(char[] str, int trueLength){
+		int numberOfSpace=countOfChar(str, 0, trueLength, ' ');
+		int newIndex=trueLength-1+numberOfSpace*2;
+		if(newIndex+1<str.length) str[newIndex+1]='\0';
+		for (int oldIndex=trueLength-1;oldIndex>=0;oldIndex--){
+			if(str[oldIndex]==' '){
+				str[newIndex]='0';
+				str[newIndex-1]='2';
+				str[newIndex-2]='%';
+				newIndex-=3;
+			}else{
+				str[newIndex]=str[oldIndex];
+				newIndex--;
+			}
+		}
+		return str;
+
+	}
+	static int countOfChar(char[] str, int start, int end, int target){
+		int count=0;
+		for (int i=start;i<end;i++){
+			if(str[i]==target){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+* Solution: every line is essential. So the logic basically find out the new Index, and then copy the old text to the new index one by one, and then do arithmetic on newIndex-- and newIndex-=3
+* this is true O(N)
+
+## Palindrome permutation 
+* So there is a shortcut. Just find out if there is 2 character for each words 
+* I also need to delete the space and lowercase them
+
+	public static boolean check(String s){
+		String t=s;
+		t=t.replaceAll("\\s+","");
+		t=t.toLowerCase();
+	//        System.out.println(t);
+		int[] letters=new int[128];
+		for (int i=0; i<t.length();i++){
+			
+			letters[t.charAt(i)]++;
+		}
+		int single=0;
+		for (int j=0;j<letters.length;j++){
+			if (letters[j]%2!=0){
+				if(letters[j]==1){
+					single++;
+				}
+				System.out.println(letters[j]);
+				if(single>1){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+* realize I allow one single
+* I got basically the same approach as the solution
+* one alternative solution is bit vector, SKIP
+
+MY: Did 3 questions in 2 hours
 
 ## recursion
 I checked the chapter but it's not really informative. So I check geekForGeek and [here](https://www.geeksforgeeks.org/recursion/) it is.
@@ -572,7 +877,7 @@ A different way to view it
 
 **Every recursive program can be written iteratively and vice versa is also true**
 
-**Advantage: recursion provides a clean and simple way to write code. Some problems are inherently recurisve like tree traversals. We can write such codes also iteratively with the help of a stack data structure. For example refer [inorder tree traversal without recursion](https://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion/), [iterative Tower of Hanoi](https://www.geeksforgeeks.org/iterative-tower-of-hanoi/)
+**Advantage: recursion provides a clean and simple way to write code. Some problems are inherently recurisve like tree traversals. We can write such codes also iteratively with the help of a stack data structure. For example refer [inorder tree traversal without recursion](https://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion/), [iterative Tower of Hanoi](https://www.geeksforgeeks.org/iterative-tower-of-hanoi/)**
 
 ## Practice Questions for Recursion | Set 1
 
@@ -600,8 +905,8 @@ fun1(0) return 1+?
           int min_index;  
           int temp;  
           
-          /* Assume that minIndex() returns index of minimum value in  
-            array arr[start_index...end_index] */
+          // Assume that minIndex() returns index of minimum value in  
+            array arr[start_index...end_index] 
           min_index = minIndex(arr, start_index, end_index); 
           
           temp = arr[start_index]; 
@@ -617,7 +922,7 @@ MY: Will get back to it a bit later
 
 ## Practice Questions for Recursion | Set 2
 
-    /* Assume that n is greater than or equal to 1 */
+    /* Assume that n is greater than or equal to 1 * /
     int fun1(int n) 
     { 
       if(n == 1) 
@@ -632,7 +937,7 @@ MY: (I did the staircase) fun1(4)=1+fun1(2)=1+1+fun(1)=1+1+0=2
 
 Question 2  
 
-    /* Assume that n is greater than or equal to 0 */
+    /* Assume that n is greater than or equal to 0 * /
     void fun2(int n) 
     { 
       if(n == 0) 
