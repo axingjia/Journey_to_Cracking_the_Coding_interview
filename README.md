@@ -979,21 +979,21 @@ MY: Did 3 questions in 2 hours
 	        int[][] newMat=new int[matrix.length][matrix.length];
 	        for(int tall=0;tall<matrix.length;tall++){
 	            for(int wide=0;wide<matrix.length;wide++){
-	//                if(tall==0&&wide==0){
+					//if(tall==0&&wide==0){
 	                    newMat[wide][matrix.length-1-tall]=matrix[tall][wide];
-	//                }
-	//                if(tall==0&&wide==1){
-	//                    newMat[1][matrix.length]=matrix[tall][wide];
-	//                }
-	//                if(tall==0&&wide==2){
-	//                    newMat[2][matrix.length]=matrix[tall][wide];
-	//                }
-	//                if(tall==0&&wide==3){
-	//                    newMat[3][matrix.length]=matrix[tall][wide];
-	//                }
-	//                if(tall==1&&wide==0){
-	//                    newMat[0][matrix.length-1]=matrix[tall][wide];
-	//                }
+					// }
+					//                if(tall==0&&wide==1){
+					//                    newMat[1][matrix.length]=matrix[tall][wide];
+					//                }
+					//                if(tall==0&&wide==2){
+					//                    newMat[2][matrix.length]=matrix[tall][wide];
+					//                }
+					//                if(tall==0&&wide==3){
+					//                    newMat[3][matrix.length]=matrix[tall][wide];
+					//                }
+					//                if(tall==1&&wide==0){
+					//                    newMat[0][matrix.length-1]=matrix[tall][wide];
+					//                }
 
 	            }
 	        }
