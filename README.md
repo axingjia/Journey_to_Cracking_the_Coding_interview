@@ -921,31 +921,31 @@ MY: Did 3 questions in 2 hours
 
 ## String Compression 
 
-	public static String compress(String s){
-        StringBuilder sb=new StringBuilder();
-        char prev=s.charAt(0);
-        int count=1;
-        for(int i=1;i<s.length();i++){
-            //if its the same as previous, then add 1 to count
-            //if its different, change prev, and reset count
-            //add to sb only once when changing
+		public static String compress(String s){
+	        StringBuilder sb=new StringBuilder();
+	        char prev=s.charAt(0);
+	        int count=1;
+	        for(int i=1;i<s.length();i++){
+	            //if its the same as previous, then add 1 to count
+	            //if its different, change prev, and reset count
+	            //add to sb only once when changing
 
-            if(s.charAt(i)==prev){
-                count++;
-            }else{
-                sb.append(prev);
-                sb.append(count);
-                prev=s.charAt(i);
-                count=1;
-            }
-            if(i>=s.length()-1){
-                sb.append(prev);
-                sb.append(count);
+	            if(s.charAt(i)==prev){
+	                count++;
+	            }else{
+	                sb.append(prev);
+	                sb.append(count);
+	                prev=s.charAt(i);
+	                count=1;
+	            }
+	            if(i>=s.length()-1){
+	                sb.append(prev);
+	                sb.append(count);
 
-            }
-        }
-        return sb.length()<s.length()?sb.toString():s;
-    }
+	            }
+	        }
+	        return sb.length()<s.length()?sb.toString():s;
+	    }
 	
 * Simple, but will need debugger to find out where the bugs are
 * It is O(N)
@@ -954,78 +954,78 @@ MY: Did 3 questions in 2 hours
 ## Rotate Matrix
 * MY: I did it, I know how to manipulate matrix now 
 
-	public static void main(String[] args) {
-        int[][] matrix= {
-                {1, 2, 3, 4},
-                {5, 6, 7, 8},
-                {9, 10, 11, 12},
-                {13, 14, 15, 16}
+		public static void main(String[] args) {
+	        int[][] matrix= {
+	                {1, 2, 3, 4},
+	                {5, 6, 7, 8},
+	                {9, 10, 11, 12},
+	                {13, 14, 15, 16}
 
-                };
-        int[][] newMat=rotate(matrix);
-        for(int tall=0;tall<newMat.length;tall++){
-            for(int wide=0;wide<newMat.length;wide++){
-                System.out.print(newMat[tall][wide]);
-                System.out.print(",");
-            }
-            System.out.println();
-        }
+	                };
+	        int[][] newMat=rotate(matrix);
+	        for(int tall=0;tall<newMat.length;tall++){
+	            for(int wide=0;wide<newMat.length;wide++){
+	                System.out.print(newMat[tall][wide]);
+	                System.out.print(",");
+	            }
+	            System.out.println();
+	        }
 
-    }
-    public static int[][] rotate(int[][] matrix){
-        int layer=matrix.length/2;
-        //go through the first array, and move it to the corresponding
-        //go through the second array, move
-        //layer, there are 2 layers
-        int[][] newMat=new int[matrix.length][matrix.length];
-        for(int tall=0;tall<matrix.length;tall++){
-            for(int wide=0;wide<matrix.length;wide++){
-//                if(tall==0&&wide==0){
-                    newMat[wide][matrix.length-1-tall]=matrix[tall][wide];
-//                }
-//                if(tall==0&&wide==1){
-//                    newMat[1][matrix.length]=matrix[tall][wide];
-//                }
-//                if(tall==0&&wide==2){
-//                    newMat[2][matrix.length]=matrix[tall][wide];
-//                }
-//                if(tall==0&&wide==3){
-//                    newMat[3][matrix.length]=matrix[tall][wide];
-//                }
-//                if(tall==1&&wide==0){
-//                    newMat[0][matrix.length-1]=matrix[tall][wide];
-//                }
+	    }
+	    public static int[][] rotate(int[][] matrix){
+	        int layer=matrix.length/2;
+	        //go through the first array, and move it to the corresponding
+	        //go through the second array, move
+	        //layer, there are 2 layers
+	        int[][] newMat=new int[matrix.length][matrix.length];
+	        for(int tall=0;tall<matrix.length;tall++){
+	            for(int wide=0;wide<matrix.length;wide++){
+	//                if(tall==0&&wide==0){
+	                    newMat[wide][matrix.length-1-tall]=matrix[tall][wide];
+	//                }
+	//                if(tall==0&&wide==1){
+	//                    newMat[1][matrix.length]=matrix[tall][wide];
+	//                }
+	//                if(tall==0&&wide==2){
+	//                    newMat[2][matrix.length]=matrix[tall][wide];
+	//                }
+	//                if(tall==0&&wide==3){
+	//                    newMat[3][matrix.length]=matrix[tall][wide];
+	//                }
+	//                if(tall==1&&wide==0){
+	//                    newMat[0][matrix.length-1]=matrix[tall][wide];
+	//                }
 
-            }
-        }
+	            }
+	        }
 
-        return newMat;
-    }
+	        return newMat;
+	    }
 
 * Checking solution now
 * Oh, I need to do it in place 
 
-	boolean rotate(int[][] matrix){
-		if (matrix.length==0 || matrix.length!=matrix[0].length) return false;
-		int n=matrix.length;
-		for (int layer=0;layer<n/2;layer++){
-			int first=layer;
-			int last=n-1-layer;
-			for (int i=first;i<last;i++){
-				int offset=i-first;
-				int top=matrix[first][i];
-				//left->top
-				matrix[first][i]=matrix[last-offset][first];
-				//bottom->left
-				matrix[last-offset][first]=matrix[last][last-offset];
-				//right->bottom
-				matrix[last][last-offset]=matrix[i][last];
-				//top->right 
-				matrix[i][last]=top;
+		boolean rotate(int[][] matrix){
+			if (matrix.length==0 || matrix.length!=matrix[0].length) return false;
+			int n=matrix.length;
+			for (int layer=0;layer<n/2;layer++){
+				int first=layer;
+				int last=n-1-layer;
+				for (int i=first;i<last;i++){
+					int offset=i-first;
+					int top=matrix[first][i];
+					//left->top
+					matrix[first][i]=matrix[last-offset][first];
+					//bottom->left
+					matrix[last-offset][first]=matrix[last][last-offset];
+					//right->bottom
+					matrix[last][last-offset]=matrix[i][last];
+					//top->right 
+					matrix[i][last]=top;
+				}
 			}
+			return true;
 		}
-		return true;
-	}
 
 * MY: Did 3 questions today
 
