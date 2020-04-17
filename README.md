@@ -778,7 +778,7 @@ page 90
 * Solution: every line is essential. So the logic basically find out the new Index, and then copy the old text to the new index one by one, and then do arithmetic on newIndex-- and newIndex-=3
 * this is true O(N)
 
-## Palindrome permutation 
+## 1.4. Palindrome permutation 
 * So there is a shortcut. Just find out if there is 2 character for each words 
 * I also need to delete the space and lowercase them
 
@@ -812,6 +812,222 @@ page 90
 * one alternative solution is bit vector, SKIP
 
 MY: Did 3 questions in 2 hours
+
+## 1.5 One Away 
+
+* MY: My solution
+
+	public static void main(String[] args) {
+	   if(totalCheck("abc","qbc")){
+		   System.out.println("this is true!");
+	   }else{
+		   System.out.println("This is false");
+	   }
+   }
+   public static boolean totalCheck(String a, String b){
+	   if(check1MoreThanB(a,b)||check1LessThanB(a,b)||oneDifference(a,b)){
+		   return true;
+	   }else{
+		   return false;
+	   }
+   }
+   public static boolean check1MoreThanB(String a,String b){
+	   if(a.length()-1==b.length()){
+
+		   int countMax1=0;
+		   int i=0;
+		   int j=0;
+		   //check all element of a, if there is one difference, that is okay, if there is two difference,
+		   //return false
+		   //if run to the last element, and everything before is the same, then okay
+		   while(i<a.length()){
+			   if(a.charAt(i)==b.charAt(j)){
+				   i++;
+				   j++;
+				   if((i==a.length()-1)&&(countMax1==0)){
+					   return true;
+				   }
+				   continue;
+			   }else{
+				   countMax1++;
+				   i++;
+				   if(countMax1>1){
+					   return false;
+				   }
+			   }
+		   }
+		   return true;
+	   }else{
+		   return false;
+	   }
+
+   }
+
+   public static boolean check1LessThanB(String a,String b){
+	   if(a.length()==b.length()-1){
+
+		   int countMax1=0;
+		   int i=0;
+		   int j=0;
+		   //check all element of a, if there is one difference, that is okay, if there is two difference,
+		   //return false
+		   //if run to the last element, and everything before is the same, then okay
+		   while(j<b.length()){
+			   if(a.charAt(i)==b.charAt(j)){
+				   i++;
+				   j++;
+				   if((i==b.length()-1)&&(countMax1==0)){
+					   return true;
+				   }
+				   continue;
+			   }else{
+				   countMax1++;
+				   j++;
+				   if(countMax1>1){
+					   return false;
+				   }
+			   }
+		   }
+		   return true;
+	   }else{
+		   return false;
+	   }
+
+   }
+
+   public static boolean oneDifference(String a, String b){
+	   if(a.length()==b.length()){
+		   int countMax1=0;
+		   for(int i=0;i<a.length();i++){
+			   if(a.charAt(i)==b.charAt(i)){
+				   continue;
+			   }else{
+				   countMax1++;
+				   if(countMax1>1){
+					   return false;
+				   }
+			   }
+		   }
+		   return true;
+	   }else{
+		   return false;
+	   }
+
+   }
+
+* Big O is O(max(aLength,bLength))
+* Checking hints now
+* Checking answer now. The first solution is basically my solution.
+
+## String Compression 
+
+	public static String compress(String s){
+        StringBuilder sb=new StringBuilder();
+        char prev=s.charAt(0);
+        int count=1;
+        for(int i=1;i<s.length();i++){
+            //if its the same as previous, then add 1 to count
+            //if its different, change prev, and reset count
+            //add to sb only once when changing
+
+            if(s.charAt(i)==prev){
+                count++;
+            }else{
+                sb.append(prev);
+                sb.append(count);
+                prev=s.charAt(i);
+                count=1;
+            }
+            if(i>=s.length()-1){
+                sb.append(prev);
+                sb.append(count);
+
+            }
+        }
+        return sb.length()<s.length()?sb.toString():s;
+    }
+	
+* Simple, but will need debugger to find out where the bugs are
+* It is O(N)
+* Check solution, It is pretty similar too. Other alternative is too complicated
+
+## Rotate Matrix
+* MY: I did it, I know how to manipulate matrix now 
+
+	public static void main(String[] args) {
+        int[][] matrix= {
+                {1, 2, 3, 4},
+                {5, 6, 7, 8},
+                {9, 10, 11, 12},
+                {13, 14, 15, 16}
+
+                };
+        int[][] newMat=rotate(matrix);
+        for(int tall=0;tall<newMat.length;tall++){
+            for(int wide=0;wide<newMat.length;wide++){
+                System.out.print(newMat[tall][wide]);
+                System.out.print(",");
+            }
+            System.out.println();
+        }
+
+    }
+    public static int[][] rotate(int[][] matrix){
+        int layer=matrix.length/2;
+        //go through the first array, and move it to the corresponding
+        //go through the second array, move
+        //layer, there are 2 layers
+        int[][] newMat=new int[matrix.length][matrix.length];
+        for(int tall=0;tall<matrix.length;tall++){
+            for(int wide=0;wide<matrix.length;wide++){
+//                if(tall==0&&wide==0){
+                    newMat[wide][matrix.length-1-tall]=matrix[tall][wide];
+//                }
+//                if(tall==0&&wide==1){
+//                    newMat[1][matrix.length]=matrix[tall][wide];
+//                }
+//                if(tall==0&&wide==2){
+//                    newMat[2][matrix.length]=matrix[tall][wide];
+//                }
+//                if(tall==0&&wide==3){
+//                    newMat[3][matrix.length]=matrix[tall][wide];
+//                }
+//                if(tall==1&&wide==0){
+//                    newMat[0][matrix.length-1]=matrix[tall][wide];
+//                }
+
+            }
+        }
+
+        return newMat;
+    }
+
+* Checking solution now
+* Oh, I need to do it in place 
+
+	boolean rotate(int[][] matrix){
+		if (matrix.length==0 || matrix.length!=matrix[0].length) return false;
+		int n=matrix.length;
+		for (int layer=0;layer<n/2;layer++){
+			int first=layer;
+			int last=n-1-layer;
+			for (int i=first;i<last;i++){
+				int offset=i-first;
+				int top=matrix[first][i];
+				//left->top
+				matrix[first][i]=matrix[last-offset][first];
+				//bottom->left
+				matrix[last-offset][first]=matrix[last][last-offset];
+				//right->bottom
+				matrix[last][last-offset]=matrix[i][last];
+				//top->right 
+				matrix[i][last]=top;
+			}
+		}
+		return true;
+	}
+
+* MY: Did 3 questions today
 
 ## recursion
 I checked the chapter but it's not really informative. So I check geekForGeek and [here](https://www.geeksforgeeks.org/recursion/) it is.
