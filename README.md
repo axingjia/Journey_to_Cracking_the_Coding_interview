@@ -286,40 +286,40 @@ fib(4)
 #### Example 15
 * The following code prints all Fibonacci numbers from 0 to n. However, this time, it stores(ie. caches) previously computed values in an integer array. If it has already been computed, it just returns the caches. What is its runtime?
 
-	void allFib(int n){
-		int[] memo=new int[n+1];
-		for (int i=0; i<n;i++){
-			System.out.println(i+": "+fib(i,memo));
+		void allFib(int n){
+			int[] memo=new int[n+1];
+			for (int i=0; i<n;i++){
+				System.out.println(i+": "+fib(i,memo));
+			}
 		}
-	}
-	
-	int fib(int n, int[] memo){
-		int (n<=0) return 0;
-		else if(n==1) return 1;
-		else if (memo[n]>0) return memo[n];
-		memo[n]=fib(n-1,memo)+fib(n-2,memo);
-		return memo[n];
-	}
-	
-	fib(0)-> return 0
-	fib(1) -> return 1
-	fib(2)
-		fib(1) ->return 1
-		fib(0) -> return 0
-		store 1 at memo[2]
-	fib(3)
-		fib(2) ->lookup memo[2]->return 1
-		fib(1) ->return 1
-		store 2 at memo[3]
-	fib(4)
-		fib(3)->lookup memo[3]->return 2
-		fib(2)->lookup memo[2] ->return 1
-		store 3 at memo[4]
-	fib(5)
-		fib(4)->lookup memo[4]->return 3
-		fib(3)->lookup memo[3]->return 2
-		store 5 at memo[5]
-	...
+		
+		int fib(int n, int[] memo){
+			int (n<=0) return 0;
+			else if(n==1) return 1;
+			else if (memo[n]>0) return memo[n];
+			memo[n]=fib(n-1,memo)+fib(n-2,memo);
+			return memo[n];
+		}
+		
+		fib(0)-> return 0
+		fib(1) -> return 1
+		fib(2)
+			fib(1) ->return 1
+			fib(0) -> return 0
+			store 1 at memo[2]
+		fib(3)
+			fib(2) ->lookup memo[2]->return 1
+			fib(1) ->return 1
+			store 2 at memo[3]
+		fib(4)
+			fib(3)->lookup memo[3]->return 2
+			fib(2)->lookup memo[2] ->return 1
+			store 3 at memo[4]
+		fib(5)
+			fib(4)->lookup memo[4]->return 3
+			fib(3)->lookup memo[3]->return 2
+			store 5 at memo[5]
+		...
 
 * At each call to fib(i), we have alrady computed and stored the values for fib(i-1) and fib(i-2). We just look up those values, sum them, store the new result, and return. This takes a constant amount of time.
 * We are doing a constant amount of work n times, so this is O(N) time
@@ -452,39 +452,39 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 ##### Unnecessary Work
 * from: 
 	
-	n=1000
-	for a from 1 to n 
-		for b from 1 to n
-			for c from 1 to n
-				for d from 1 to n
-					if a^3+a^3==c^3+d^3
-						print a,b,c,d
+		n=1000
+		for a from 1 to n 
+			for b from 1 to n
+				for c from 1 to n
+					for d from 1 to n
+						if a^3+a^3==c^3+d^3
+							print a,b,c,d
 
 * To:
 	
-	n=1000
-	for a from 1 to n 
-		for b from 1 to n
-			for c from 1 to n
-				d=pow(a^3+b^3-c^3,1/3);//will rount to int
-				if a^3+a^3==c^3+d^3 && 0<d && d<=n
-					print a,b,c,d
+		n=1000
+		for a from 1 to n 
+			for b from 1 to n
+				for c from 1 to n
+					d=pow(a^3+b^3-c^3,1/3);//will rount to int
+					if a^3+a^3==c^3+d^3 && 0<d && d<=n
+						print a,b,c,d
 	
 * This goes from O(n^4) to O(N^3)
 
 #### Duplicate Work 
 * Why do we keep on computing all (c,d) for each (a,b) pair? We should just create the list of (c,d) pair once 
 
-	n=1000
-	for c from 1 to n
-		for d from 1 to n
-			result = c^3+d^3
-			append (c,d) to list at value map[result]
-			
-	for each result, list in map 
-		for each pair1 in list 
-			for each pair2 in list 
-				print pair1, pair2
+		n=1000
+		for c from 1 to n
+			for d from 1 to n
+				result = c^3+d^3
+				append (c,d) to list at value map[result]
+				
+		for each result, list in map 
+			for each pair1 in list 
+				for each pair2 in list 
+					print pair1, pair2
 
 #### Optimize & Solve Techniques #2: DIY
 * SKIP
@@ -497,13 +497,13 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 * Example: Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
 * consider a test string abcdefg
 
-	case "a" -> {"a"}
-	case "ab" ->{"ab","ba"}
-	case "abc" -> ?
-	
-	P("abc") =insert "c" into all location of all strings in P("ab")
-	P("abc") = insert "c" into all locations of all strings in {"ab","ba"}
-	P("abc") ...
+		case "a" -> {"a"}
+		case "ab" ->{"ab","ba"}
+		case "abc" -> ?
+		
+		P("abc") =insert "c" into all location of all strings in P("ab")
+		P("abc") = insert "c" into all locations of all strings in {"ab","ba"}
+		P("abc") ...
 	
 * Now that we understand the pattern, we can develop a general recursive algorithm. We generate all permutations of string s(1)...s(n) by "chopping off" the last character and generating all permutations of s(1)...s(n-1). Once we have the list of all permutations of S(1)...s(n-1), we iterate through this list. For each string in it, we insert Sn of the string.
 
@@ -558,31 +558,31 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 ### Use Data Structure Generously 
 * Suppose you were asked to write a function to add two simple mathematical expressions which are of the form Ax^a+Bx^b+...
 
-	Class ExprTerm{
-		double coeffient;
-		double exponent;
-	}
-	
-	ExprTerm[] sum(ExprTerm[] expr1, ExprTerm[] expr2){
-		...
-	}
+		Class ExprTerm{
+			double coeffient;
+			double exponent;
+		}
+		
+		ExprTerm[] sum(ExprTerm[] expr1, ExprTerm[] expr2){
+			...
+		}
 
 ### Appropriate Code Reuse 
 * Sidetacked, cool code:
 
-	int convertFromBase(String number, int base){
-		if ( base<2 || (base>10 && base!=16)) return -1;
-		int value=0;
-		for (int i=number.length()-1;i>=0;i--){
-			int digit=digitToValue(num.charAt(i));
-			if (digit<0 || digit >=base){
-				return -1;
+		int convertFromBase(String number, int base){
+			if ( base<2 || (base>10 && base!=16)) return -1;
+			int value=0;
+			for (int i=number.length()-1;i>=0;i--){
+				int digit=digitToValue(num.charAt(i));
+				if (digit<0 || digit >=base){
+					return -1;
+				}
+				int exp=number.length-1-i;
+				value+=digit*Math.pow(base,exp);
 			}
-			int exp=number.length-1-i;
-			value+=digit*Math.pow(base,exp);
+			return value;
 		}
-		return value;
-	}
 	
 ### Modular 
 * SKIP
@@ -603,49 +603,50 @@ page 75
 * ArrayList & Resizable Array: In some languages, array are automatically resizable. The array or list will grow as you append items. In other languages, like Java, the array's size can't change after its creation.
 * StringBuilder: when you concatenate string, it creates new string. Instead, use StringBuilder
 
-	//from 
-	String joinWords(String[] words){
-		String sentence= "";
-		for (String w: words){
-			sentence=sentence+w;
+		//from 
+		String joinWords(String[] words){
+			String sentence= "";
+			for (String w: words){
+				sentence=sentence+w;
+			}
+			return sentence;
 		}
-		return sentence;
-	}
-	
-	//to
-	String joiWords(String[] words){
-		StringBuilder sentence=new StringBuilder();
-		for(String w: words){
-			sentence.append(w);
+		
+		//to
+		String joiWords(String[] words){
+			StringBuilder sentence=new StringBuilder();
+			for(String w: words){
+				sentence.append(w);
+			}
+			return sentence.toString();
 		}
-		return sentence.toString();
-	}
+		
 * Addtional Reading: Hash Table Collision Resolution, Rabin-karp Substring Search
 
 ## Interview Question 
 
 ### 1.1. Is Unique:
 
-	public static void main(String[] args) {
-        if(check("abcdeg")){
-            System.out.println("unique");
-        }else{
-            System.out.println("not unique");
-        }
-    }
-    static boolean check(String s){
-        ArrayList<Character> array=new ArrayList<>();
-        for (int i=0;i<s.length();i++){
-            for(int j=0;j<array.size();j++){
-                if(array.get(j)==s.charAt(i)){
-                    return false;
-                }
+		public static void main(String[] args) {
+	        if(check("abcdeg")){
+	            System.out.println("unique");
+	        }else{
+	            System.out.println("not unique");
+	        }
+	    }
+	    static boolean check(String s){
+	        ArrayList<Character> array=new ArrayList<>();
+	        for (int i=0;i<s.length();i++){
+	            for(int j=0;j<array.size();j++){
+	                if(array.get(j)==s.charAt(i)){
+	                    return false;
+	                }
 
-            }
-            array.add(s.charAt(i));
-        }
-        return true;
-    }
+	            }
+	            array.add(s.charAt(i));
+	        }
+	        return true;
+	    }
 	
 * MY runtime O(N^2) where N is the length, but amortized, CORRECTED: THIS IS NOT AMORTIZED. its just 2 loop
 * Tip 1: use a hashtable; so the searching can go from O(N) to O(1); so the result will be O(N)
@@ -653,67 +654,65 @@ page 75
 * https://www.geeksforgeeks.org/determine-string-unique-characters/
 * O(nLogn), sort is nlogn, check is n
 
-boolean uniqueCharacters(String str) 
-    { 
-        char[] chArray = str.toCharArray(); 
-  
-        // Using sorting 
-        // Arrays.sort() uses binarySort in the background 
-        // for non-primitives which is of O(nlogn) time complexity 
-        Arrays.sort(chArray); 
-  
-        for (int i = 0; i < chArray.length - 1; i++) { 
-            // if the adjacent elements are not 
-            // equal, move to next element 
-            if (chArray[i] != chArray[i + 1]) 
-                continue; 
-  
-            // if at any time, 2 adjacent elements 
-            // become equal, return false 
-            else
-                return false; 
-        } 
-        return true; 
-    } 
+		boolean uniqueCharacters(String str) 
+	    { 
+	        char[] chArray = str.toCharArray(); 
+	  
+	        // Using sorting 
+	        // Arrays.sort() uses binarySort in the background 
+	        // for non-primitives which is of O(nlogn) time complexity 
+	        Arrays.sort(chArray); 
+	  
+	        for (int i = 0; i < chArray.length - 1; i++) { 
+	            // if the adjacent elements are not 
+	            // equal, move to next element 
+	            if (chArray[i] != chArray[i + 1]) 
+	                continue; 
+	  
+	            // if at any time, 2 adjacent elements 
+	            // become equal, return false 
+	            else
+	                return false; 
+	        } 
+	        return true; 
+	    } 
 
-
-page 90
 
 ### Check Permutation
 
-	//check the whole array, if there is, remove it, if there isn't, then its not permutation
-    //check the whole array b with first character of array a, go through the whole array b, if there is, remove it, and
-    //go to the second character of array b, if there isn't then its not a permutation
-    //when the whole array b is check, and nothing happen, then its true
-    //if there isn't: if checking the the first element of array b, and check the last element of array a, and can't find it
-    //
-    /* abc
-    bca
-    for i
+		//check the whole array, if there is, remove it, if there isn't, then its not permutation
+	    //check the whole array b with first character of array a, go through the whole array b, if there is, remove it, and
+	    //go to the second character of array b, if there isn't then its not a permutation
+	    //when the whole array b is check, and nothing happen, then its true
+	    //if there isn't: if checking the the first element of array b, and check the last element of array a, and can't find it
+	    //
+	    /* abc
+	    bca
+	    for i
 
-     * /
-    static boolean check(String a, String b){
-        if(a.length()!=b.length()) return false;
-        char[] aArray=a.toCharArray();
-        ArrayList<Character> array= new ArrayList<>();
-        for(int aa=0;aa<aArray.length;aa++){
-            array.add(aArray[aa]);
-        }
-        for(int i=0;i<b.length();i++){
-            for (int j=0;j<array.size();j++){
-                System.out.println(array.size());
-                if(array.get(j)==b.charAt(i)){
-                    array.remove(j);
-                    break;
-                }
-                if((j==array.size()-1)&&(array.get(j)!=b.charAt(i))){
-                    return false;
-                }
-            }
+	     * /
+	    static boolean check(String a, String b){
+	        if(a.length()!=b.length()) return false;
+	        char[] aArray=a.toCharArray();
+	        ArrayList<Character> array= new ArrayList<>();
+	        for(int aa=0;aa<aArray.length;aa++){
+	            array.add(aArray[aa]);
+	        }
+	        for(int i=0;i<b.length();i++){
+	            for (int j=0;j<array.size();j++){
+	                System.out.println(array.size());
+	                if(array.get(j)==b.charAt(i)){
+	                    array.remove(j);
+	                    break;
+	                }
+	                if((j==array.size()-1)&&(array.get(j)!=b.charAt(i))){
+	                    return false;
+	                }
+	            }
 
-        }
-        return true;
-    }
+	        }
+	        return true;
+	    }
 
 * This is brute force again
 * It is O(N^2)
@@ -722,58 +721,58 @@ page 90
 
 ### URLify 
 
-	public static String convert(String s){
-        String t=s.trim();
-        char[] charArray=t.toCharArray();
-        ArrayList<String> array=new ArrayList<>();
-        for (int j=0;j<charArray.length;j++){
-            System.out.println(String.valueOf(charArray[j]));
-            array.add(String.valueOf(charArray[j]));
-        }
-        for(int i=0; i<array.size();i++){
-            if (array.get(i).equals(" ")){
-                array.set(i,"%20");
-                System.out.println("this is in");
-            }
-        }
-        StringBuilder sb=new StringBuilder();
-        for (int k=0;k<array.size();k++){
-            sb.append(array.get(k));
-        }
-        return sb.toString();
-    }
+		public static String convert(String s){
+	        String t=s.trim();
+	        char[] charArray=t.toCharArray();
+	        ArrayList<String> array=new ArrayList<>();
+	        for (int j=0;j<charArray.length;j++){
+	            System.out.println(String.valueOf(charArray[j]));
+	            array.add(String.valueOf(charArray[j]));
+	        }
+	        for(int i=0; i<array.size();i++){
+	            if (array.get(i).equals(" ")){
+	                array.set(i,"%20");
+	                System.out.println("this is in");
+	            }
+	        }
+	        StringBuilder sb=new StringBuilder();
+	        for (int k=0;k<array.size();k++){
+	            sb.append(array.get(k));
+	        }
+	        return sb.toString();
+	    }
 	
 * It is O(N)
 * checking hint now
 * Check solution now. The solution use only char array and do manipulate the char array directly.
 
-	static char[] replaceSpace(char[] str, int trueLength){
-		int numberOfSpace=countOfChar(str, 0, trueLength, ' ');
-		int newIndex=trueLength-1+numberOfSpace*2;
-		if(newIndex+1<str.length) str[newIndex+1]='\0';
-		for (int oldIndex=trueLength-1;oldIndex>=0;oldIndex--){
-			if(str[oldIndex]==' '){
-				str[newIndex]='0';
-				str[newIndex-1]='2';
-				str[newIndex-2]='%';
-				newIndex-=3;
-			}else{
-				str[newIndex]=str[oldIndex];
-				newIndex--;
+		static char[] replaceSpace(char[] str, int trueLength){
+			int numberOfSpace=countOfChar(str, 0, trueLength, ' ');
+			int newIndex=trueLength-1+numberOfSpace*2;
+			if(newIndex+1<str.length) str[newIndex+1]='\0';
+			for (int oldIndex=trueLength-1;oldIndex>=0;oldIndex--){
+				if(str[oldIndex]==' '){
+					str[newIndex]='0';
+					str[newIndex-1]='2';
+					str[newIndex-2]='%';
+					newIndex-=3;
+				}else{
+					str[newIndex]=str[oldIndex];
+					newIndex--;
+				}
 			}
-		}
-		return str;
+			return str;
 
-	}
-	static int countOfChar(char[] str, int start, int end, int target){
-		int count=0;
-		for (int i=start;i<end;i++){
-			if(str[i]==target){
-				count++;
-			}
 		}
-		return count;
-	}
+		static int countOfChar(char[] str, int start, int end, int target){
+			int count=0;
+			for (int i=start;i<end;i++){
+				if(str[i]==target){
+					count++;
+				}
+			}
+			return count;
+		}
 	
 * Solution: every line is essential. So the logic basically find out the new Index, and then copy the old text to the new index one by one, and then do arithmetic on newIndex-- and newIndex-=3
 * this is true O(N)
@@ -782,30 +781,30 @@ page 90
 * So there is a shortcut. Just find out if there is 2 character for each words 
 * I also need to delete the space and lowercase them
 
-	public static boolean check(String s){
-		String t=s;
-		t=t.replaceAll("\\s+","");
-		t=t.toLowerCase();
-	//        System.out.println(t);
-		int[] letters=new int[128];
-		for (int i=0; i<t.length();i++){
-			
-			letters[t.charAt(i)]++;
-		}
-		int single=0;
-		for (int j=0;j<letters.length;j++){
-			if (letters[j]%2!=0){
-				if(letters[j]==1){
-					single++;
-				}
-				System.out.println(letters[j]);
-				if(single>1){
-					return false;
+		public static boolean check(String s){
+			String t=s;
+			t=t.replaceAll("\\s+","");
+			t=t.toLowerCase();
+		//        System.out.println(t);
+			int[] letters=new int[128];
+			for (int i=0; i<t.length();i++){
+				
+				letters[t.charAt(i)]++;
+			}
+			int single=0;
+			for (int j=0;j<letters.length;j++){
+				if (letters[j]%2!=0){
+					if(letters[j]==1){
+						single++;
+					}
+					System.out.println(letters[j]);
+					if(single>1){
+						return false;
+					}
 				}
 			}
+			return true;
 		}
-		return true;
-	}
 	
 * realize I allow one single
 * I got basically the same approach as the solution
@@ -817,103 +816,103 @@ MY: Did 3 questions in 2 hours
 
 * MY: My solution
 
-	public static void main(String[] args) {
-	   if(totalCheck("abc","qbc")){
-		   System.out.println("this is true!");
-	   }else{
-		   System.out.println("This is false");
+		public static void main(String[] args) {
+		   if(totalCheck("abc","qbc")){
+			   System.out.println("this is true!");
+		   }else{
+			   System.out.println("This is false");
+		   }
 	   }
-   }
-   public static boolean totalCheck(String a, String b){
-	   if(check1MoreThanB(a,b)||check1LessThanB(a,b)||oneDifference(a,b)){
-		   return true;
-	   }else{
-		   return false;
+	   public static boolean totalCheck(String a, String b){
+		   if(check1MoreThanB(a,b)||check1LessThanB(a,b)||oneDifference(a,b)){
+			   return true;
+		   }else{
+			   return false;
+		   }
 	   }
-   }
-   public static boolean check1MoreThanB(String a,String b){
-	   if(a.length()-1==b.length()){
+	   public static boolean check1MoreThanB(String a,String b){
+		   if(a.length()-1==b.length()){
 
-		   int countMax1=0;
-		   int i=0;
-		   int j=0;
-		   //check all element of a, if there is one difference, that is okay, if there is two difference,
-		   //return false
-		   //if run to the last element, and everything before is the same, then okay
-		   while(i<a.length()){
-			   if(a.charAt(i)==b.charAt(j)){
-				   i++;
-				   j++;
-				   if((i==a.length()-1)&&(countMax1==0)){
-					   return true;
-				   }
-				   continue;
-			   }else{
-				   countMax1++;
-				   i++;
-				   if(countMax1>1){
-					   return false;
+			   int countMax1=0;
+			   int i=0;
+			   int j=0;
+			   //check all element of a, if there is one difference, that is okay, if there is two difference,
+			   //return false
+			   //if run to the last element, and everything before is the same, then okay
+			   while(i<a.length()){
+				   if(a.charAt(i)==b.charAt(j)){
+					   i++;
+					   j++;
+					   if((i==a.length()-1)&&(countMax1==0)){
+						   return true;
+					   }
+					   continue;
+				   }else{
+					   countMax1++;
+					   i++;
+					   if(countMax1>1){
+						   return false;
+					   }
 				   }
 			   }
+			   return true;
+		   }else{
+			   return false;
 		   }
-		   return true;
-	   }else{
-		   return false;
+
 	   }
 
-   }
+	   public static boolean check1LessThanB(String a,String b){
+		   if(a.length()==b.length()-1){
 
-   public static boolean check1LessThanB(String a,String b){
-	   if(a.length()==b.length()-1){
-
-		   int countMax1=0;
-		   int i=0;
-		   int j=0;
-		   //check all element of a, if there is one difference, that is okay, if there is two difference,
-		   //return false
-		   //if run to the last element, and everything before is the same, then okay
-		   while(j<b.length()){
-			   if(a.charAt(i)==b.charAt(j)){
-				   i++;
-				   j++;
-				   if((i==b.length()-1)&&(countMax1==0)){
-					   return true;
-				   }
-				   continue;
-			   }else{
-				   countMax1++;
-				   j++;
-				   if(countMax1>1){
-					   return false;
-				   }
-			   }
-		   }
-		   return true;
-	   }else{
-		   return false;
-	   }
-
-   }
-
-   public static boolean oneDifference(String a, String b){
-	   if(a.length()==b.length()){
-		   int countMax1=0;
-		   for(int i=0;i<a.length();i++){
-			   if(a.charAt(i)==b.charAt(i)){
-				   continue;
-			   }else{
-				   countMax1++;
-				   if(countMax1>1){
-					   return false;
+			   int countMax1=0;
+			   int i=0;
+			   int j=0;
+			   //check all element of a, if there is one difference, that is okay, if there is two difference,
+			   //return false
+			   //if run to the last element, and everything before is the same, then okay
+			   while(j<b.length()){
+				   if(a.charAt(i)==b.charAt(j)){
+					   i++;
+					   j++;
+					   if((i==b.length()-1)&&(countMax1==0)){
+						   return true;
+					   }
+					   continue;
+				   }else{
+					   countMax1++;
+					   j++;
+					   if(countMax1>1){
+						   return false;
+					   }
 				   }
 			   }
+			   return true;
+		   }else{
+			   return false;
 		   }
-		   return true;
-	   }else{
-		   return false;
+
 	   }
 
-   }
+	   public static boolean oneDifference(String a, String b){
+		   if(a.length()==b.length()){
+			   int countMax1=0;
+			   for(int i=0;i<a.length();i++){
+				   if(a.charAt(i)==b.charAt(i)){
+					   continue;
+				   }else{
+					   countMax1++;
+					   if(countMax1>1){
+						   return false;
+					   }
+				   }
+			   }
+			   return true;
+		   }else{
+			   return false;
+		   }
+
+	   }
 
 * Big O is O(max(aLength,bLength))
 * Checking hints now
