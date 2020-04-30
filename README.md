@@ -1,6 +1,6 @@
 # Journey to Cracking the Coding Interview
 
-Again, it's a notetaking repo. 
+Again, it's a notetaking repo.
 
 If I have the book I can probably take notes on the book, but it wouldn't beat taking notes on a notebook.
 
@@ -24,7 +24,7 @@ And taking notes on github means I can check it anywhere, don't know the usefuln
 			->sum(2)
 				->sum(1)
 					->sum(0)
-					
+
 * However, just because you have n calls total doesn't mean it takes O(n) space. Consider the following:
 
 int pairSumSequence(int n){
@@ -61,9 +61,9 @@ Page 41
 
 * O(A*B)
 
-###### Amortized Time 
-* Dynamically resizing array 
-* how do you describe the runtime of adding elements. This is a tricky question 
+###### Amortized Time
+* Dynamically resizing array
+* how do you describe the runtime of adding elements. This is a tricky question
 * You know when you add at N element, it take O(N) time, because you will have to create a new array of size 2N and then copy elements over. This adding will take O(N) time
 * However, we also know that this doesn't happen very often. The vast majority of the time adding will be in O(1) time.
 * We need a concept that takes both into account. This is what amortized time does. it allows us to describe that, yes, this worst case happens every once in a while. But once it happens, it won't happen again for so long that the cost is "amortized"
@@ -86,7 +86,7 @@ Page 41
 		}
 		return f(n-1)+f(n-1);
 	}
-	
+
 * A lot of people will, for some reason, see the two calls to f and jump to O(N^2). This is completely incorrect.
 * Rather than making assumptions, let's derive the runtime by walking through the code. Suppose we call f(4). This call f(3) twice. Each of those calls to f(3) calls f(2), until we get down to f(1)
 * The tree will have depth N. Each node has two children. Therefore, each level will have twice as many calls as the one above it. The number of node on each level is:
@@ -132,7 +132,7 @@ SKIP: General one loop inside another, takes O(N^2)
 #### Example 5
 * SKIP, just 3 loop, with the third loop from 1 to 10000. still O(ab)
 
-#### Example 6 
+#### Example 6
 
 void reverse(int[] array){
 	for (int i=0; i<array.length/2;i++){
@@ -148,9 +148,9 @@ void reverse(int[] array){
 * SKIP, just dropping trailing big O
 
 #### Example 8
-* sort string, and sort the array of string 
+* sort string, and sort the array of string
 * MY:  slogs+nlogn=N^2*2logN
-* Incorrect 
+* Incorrect
 * assume s be the length of the longest string, and a be the length of the array
 * sort each string is O(sLogs)
 * do this for each string, so O(a*sLogs)
@@ -158,7 +158,7 @@ void reverse(int[] array){
 * So, in conclusion, O(asLogs+asLoga)
 
 #### Example 9
-* This is a balanced binary search tree 
+* This is a balanced binary search tree
 
 	int sum(Node node){
 		if (node==null){
@@ -166,11 +166,11 @@ void reverse(int[] array){
 		}
 		return sum(node.left)+node.value+sum(node.right)
 	}
-	
-* Just because it's a binary search tree doesn't mean that there is a log in it 
+
+* Just because it's a binary search tree doesn't mean that there is a log in it
 * The most straightforward way is to think about what this means. This code touches each node in the tree once and does a constant time amount of work with each "touch"
 * Therefore, the runtime will be linear in terms of number of nodes. So O(N)
-* Recursive pattern 
+* Recursive pattern
 * On page 44, we discuss a pattern for the runtime of recursive functions that have multiple branches. There are two branches at each call, so we're looking at O(2^depth)
 * At this point many people might assume that something went wrong since we have an exponential algorithm--that something in our logic is flawed or that we've inadventently created an exponential time algorithm (yikes!)
 * The second statement is correct. We do have an exponential time algorithm, but it's not as bad as one might think.
@@ -209,10 +209,10 @@ By equation above, we get O(2^(logN))
 			return n*factorial (n-1);
 		}
 	}
-	
+
 * This is a straight recursion from n to n-1 to n-2 down to 1. it will take O(n) time
 
-#### Example 12 
+#### Example 12
 
 	void permutation(String str){
 		permutation(str,"");
@@ -237,7 +237,7 @@ By equation above, we get O(2^(logN))
 * How many times does the function get called?
 * How many leafs nodes are there. This is simply the number of permutation. We branch 4 times at the root, then 3, then 2, then 1. This gives us 4*3*2*1 leaf nodes. Or, expressed more generically, n! permutation.
 * How many total nodes are there? Each leaf node is attached to a path with n nodes. So at most, there are n*n! total nodes in the tree.
-* The total runtime therefore is (at worst) O(n*n*n!). 
+* The total runtime therefore is (at worst) O(n*n*n!).
 * Advanced: O(e*n!), SKIM
 
 #### Example 13
@@ -247,7 +247,7 @@ By equation above, we get O(2^(logN))
 		else if (n==1) return 1;
 		return fib(n-1)+fib(n-2)
 	}
-	
+
 * We can use the earlier pattern we'd established for recursive call: O(branch^depth)
 * There are 2 branches per call, and we go as deep as N, therefore the runtime is O(2^N).
 * MY: What??
@@ -256,7 +256,7 @@ fib(4)
 	->fib(2)+fib(1)+(fib(1)+0)
 	->fib(1)+fib(0)+0
 	->1+0+0+1+0
-	
+
 * Refer to [Recursive Runtime], O(2^0+2^1+2^2+2^3)=O(2^n-1)
 
 #### Example 14
@@ -265,7 +265,7 @@ fib(4)
 			System.out.println(i+":"+fib(i));
 		}
 	}
-	
+
 	int fib(int n){
 		if (n<=0) return 0;
 		else if (n==1) return 1;
@@ -292,7 +292,7 @@ fib(4)
 				System.out.println(i+": "+fib(i,memo));
 			}
 		}
-		
+
 		int fib(int n, int[] memo){
 			int (n<=0) return 0;
 			else if(n==1) return 1;
@@ -300,7 +300,7 @@ fib(4)
 			memo[n]=fib(n-1,memo)+fib(n-2,memo);
 			return memo[n];
 		}
-		
+
 		fib(0)-> return 0
 		fib(1) -> return 1
 		fib(2)
@@ -351,13 +351,13 @@ fib(4)
 
 ## Additional problem
 * VI.1: MY: O(b) CORRECT
-* VI.2: MY: 
+* VI.2: MY:
 
 	power(4,3)
 	-> a* power(a,2)
 	-> a* a* power(a,1)
 	-> a*a*a*power(a,0)
-	O(b)  CORRECT 
+	O(b)  CORRECT
 * VI.3: MY: O(1). [CORRECT], but the code is interesting. Record:
 
 	int mod(int a, int b){
@@ -367,7 +367,7 @@ fib(4)
 		int div=a/b;
 		return a-div*b;
 	}
-	
+
 * VI.4: O(a/b)  CORRECT
 * VI.5: SKIP
 
@@ -375,7 +375,7 @@ fib(4)
 ### chapter 7: Technical Question
 * Don't read question and answer, try to do it
 * Advanced: write the code on paper.
-* Test your code 
+* Test your code
 * Type your paper code as-is into a computer
 * try to do as many mock interviews as possible
 
@@ -391,8 +391,8 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 * Depth First Search
 * Binary Search
 * Merge Sort
-* Quick Sort 
-* Bit Manipulation 
+* Quick Sort
+* Bit Manipulation
 * Memory (Stack vs. Heap)
 * Recursion
 * Dynamic Programming
@@ -412,15 +412,15 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 * You might even find it useful to write the pertinent information on the whiteboard
 
 ### Draw an Example
-* An example can dramatically improve your ability to solve an interview question, and yet so many candidates just try to solve the questino in their head 
+* An example can dramatically improve your ability to solve an interview question, and yet so many candidates just try to solve the questino in their head
 * For example, when drawing an binary search tree, don't just try 2 levels, and don't leave the value empty. And don't try a perfect tree(the last level is all filled up)
 
-### State a brute force algorithm 
+### State a brute force algorithm
 * State a brute force. Some candidate don't state the brute force because they think it's both obvious and terrible. But state it anyways, it might be obvious for you, but it is not necessarily obvious for all candidates. You don't want your interviewer to think that you're struggling to see even the easy solution
 
-### 4. Optimize 
-* Once you have a brute force algorithm, you should work on optimizing it. A few techniques that work well are: 
-* 1. Look for unused information. Did you interviewer tell you that the array was sorted? How can you leverage that information 
+### 4. Optimize
+* Once you have a brute force algorithm, you should work on optimizing it. A few techniques that work well are:
+* 1. Look for unused information. Did you interviewer tell you that the array was sorted? How can you leverage that information
 * 2. Use a fresh example. Sometimes, just seeing a different example will unclog your mind or help you see a pattern in the problem
 * 3. Solve it "incoorectly". SKIP
 * 4. Make time vs space tradeoff.
@@ -428,32 +428,32 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 * 6. Use a hash table.
 * Think about the best conceivable runtime.
 
-### 5. Walk Through 
-* Test and fix bugs 
+### 5. Walk Through
+* Test and fix bugs
 
-### 6. Implement 
-* Write them down. 
+### 6. Implement
+* Write them down.
 * Modularized code
 * error checks
 * use other classes/structs where appropriate.
-* Good variable names 
+* Good variable names
 
-### 7. Test 
+### 7. Test
 * Start with a "conceptual" test
 * weird looking code like x=length-2
 * hot spot. Ex: base case in recursive code, integer division, null node in binary tree, the start and end of iteratino through a linked list
 * small test cases
 * special cases. Test your code against null or single element values, the extreme cases, and other speical cases.
 
-### Optimize & Solve Technique #1: Look for BUD 
+### Optimize & Solve Technique #1: Look for BUD
 * Bottleneck, unnecessary work, duplicate work
 * if we sort an array, then find element will be O(logN)
 
 ##### Unnecessary Work
-* from: 
-	
+* from:
+
 		n=1000
-		for a from 1 to n 
+		for a from 1 to n
 			for b from 1 to n
 				for c from 1 to n
 					for d from 1 to n
@@ -461,29 +461,29 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 							print a,b,c,d
 
 * To:
-	
+
 		n=1000
-		for a from 1 to n 
+		for a from 1 to n
 			for b from 1 to n
 				for c from 1 to n
 					d=pow(a^3+b^3-c^3,1/3);//will rount to int
 					if a^3+a^3==c^3+d^3 && 0<d && d<=n
 						print a,b,c,d
-	
+
 * This goes from O(n^4) to O(N^3)
 
-#### Duplicate Work 
-* Why do we keep on computing all (c,d) for each (a,b) pair? We should just create the list of (c,d) pair once 
+#### Duplicate Work
+* Why do we keep on computing all (c,d) for each (a,b) pair? We should just create the list of (c,d) pair once
 
 		n=1000
 		for c from 1 to n
 			for d from 1 to n
 				result = c^3+d^3
 				append (c,d) to list at value map[result]
-				
-		for each result, list in map 
-			for each pair1 in list 
-				for each pair2 in list 
+
+		for each result, list in map
+			for each pair1 in list
+				for each pair2 in list
 					print pair1, pair2
 
 #### Optimize & Solve Techniques #2: DIY
@@ -492,7 +492,7 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 #### Optimize & Solve Technique #3: Simplify and Generalize
 * SKIP
 
-#### Optmize & Solve Technique #4: Base Case and Build 
+#### Optmize & Solve Technique #4: Base Case and Build
 * With Base Case and Build, we solve the problem first for a base case and then try to build up from there. When we get to more complex/interesting cases, we try to build those using the prior solutions.
 * Example: Design an algorithm to print all permutations of a string. For simplicity, assume all characters are unique.
 * consider a test string abcdefg
@@ -500,74 +500,74 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 		case "a" -> {"a"}
 		case "ab" ->{"ab","ba"}
 		case "abc" -> ?
-		
+
 		P("abc") =insert "c" into all location of all strings in P("ab")
 		P("abc") = insert "c" into all locations of all strings in {"ab","ba"}
 		P("abc") ...
-	
+
 * Now that we understand the pattern, we can develop a general recursive algorithm. We generate all permutations of string s(1)...s(n) by "chopping off" the last character and generating all permutations of s(1)...s(n-1). Once we have the list of all permutations of S(1)...s(n-1), we iterate through this list. For each string in it, we insert Sn of the string.
 
 #### Optimize & Solve Technique #5: Data Structure Brainstorm
-* This approach is certainly hacky, but it often works. We can simply run through a list of data structures and try to apply one. This approach is useful because solving a problem may be trivial once it occurs to use to use, say, a tree 
+* This approach is certainly hacky, but it often works. We can simply run through a list of data structures and try to apply one. This approach is useful because solving a problem may be trivial once it occurs to use to use, say, a tree
 * Example: numbers are randomly generated and stored into an expanding array. how would you keep track of the median.
 * Our data structure brainstorm might look like the following:
-* Linked list? probably not. Linked lists tend not to do very well with accessing and sorting numbers 
+* Linked list? probably not. Linked lists tend not to do very well with accessing and sorting numbers
 * Array? Maybe, but already have an array. Could you somehow keep the elements sorted? That's probably expensive.
 * Binary tree? This is possible, since binary trees do fairly well with ordering. in fact, if the binary search tree is perfectly balance, the top might be the median. But, be careful--if there's an even number of elements, the median is actually the average of the middle two elements. The middle two elements can't both be at the top. This is probably a workable algorithm, but let's come back to it
 * Heap. A heap is really good at basic ordering and keep track of max and min. This is actually interesting--if you have two heaps, you could keep track of the bigger half and the smaller half the elements. The bigger half is kept in a min heap, such that the smallest element in the bigger half is at the root. The smaller half is kept in a max help, such the the biggest element of the smaller half is at the root. Now, with these data structure, you have the potential median elements at the roots. If the heaps are not longer the same size, you can quickly "rebalance" the heap by popping an element off the one heap and push it onto the other.
 
 ### Best Conceivable Runtime
 * One way BCR can be useful: we can use the runtimes to get a "hint" for what we need to reduce.
-* Example: Find common numbers in two arrays 
+* Example: Find common numbers in two arrays
 * BCR is 2N. So the best conceivable runtimes is O(N)
 * Any precomputation that's O(N) or less is "free"
 * In this case, we can just throw everything in B into a hash table. This will take O(N) time. Then we just go through A and look up each element in the hash table. This loop up (or search) is O(1), so our runtime is O(N)
 * Suppose our interviewer hits us with a question that makes us cringe: Can we do better
 * No, not in terms of runtime. We have achiebved the fastest possible runtime, therefore we can not optimize the big O time. We could potentially optimiz the space complexity.
 * *This is another place where BCR is useful. It tells us that we are "done" in terms of optimizing the runtime, and we should therefore turn our efforts to the space complexity*
-* in fact, even without the interviewer prompting us, we should have a question mark with respect to our algorithm. We would have achieved the exact same runtime if the data wasn't sorted. So why did the interviewer give us sorted arrays? That's not unheard of, but it is a bit strange 
-* We are now looking for an algorithm that: Operating in O(1) space (probably). We already have an O(N) space algorithm with optimal runtime. If we want to use less additional space, that probably means no additional space. Therefore, we need to drop the hash table 
-* Operates in O(N) time(probably). We'll probably want to at least match the current best runtime, and we know we can't beat it 
+* in fact, even without the interviewer prompting us, we should have a question mark with respect to our algorithm. We would have achieved the exact same runtime if the data wasn't sorted. So why did the interviewer give us sorted arrays? That's not unheard of, but it is a bit strange
+* We are now looking for an algorithm that: Operating in O(1) space (probably). We already have an O(N) space algorithm with optimal runtime. If we want to use less additional space, that probably means no additional space. Therefore, we need to drop the hash table
+* Operates in O(N) time(probably). We'll probably want to at least match the current best runtime, and we know we can't beat it
 * use the fact that the arrays are sorted.
 * Our best algorithm that doesn't use extra space was the binary search one. Let's think about optimizing that. We can try walking through the algorithm.
 * Think about BUD. The bottleneck is the searching. Is there anything unnecessary or duplicated?
 * It is unnecessary that A[3]=40 searched over all of B. We know that we just found 35 at B[1], so 40 certainly won't be before 35.
-* Each binary search should start where the last one left off 
+* Each binary search should start where the last one left off
 * in fact, we don't need to do a binary search at all now. We can just do a linear search. As long as the linear search in B is just picking up where the last one left off, we know that we're going to be operating in linear time
-* This algoritm is very similar to merging two sorted arrays. It operates in O(N) time and O(1) space 
-* We have now reached the BCR and have minimal space. We know that we can not do better 
-* This is another way we can use BCR. If you ever reach the BCR and have O(1) additional space, then you know that you can't optimize the big O time or space 
+* This algoritm is very similar to merging two sorted arrays. It operates in O(N) time and O(1) space
+* We have now reached the BCR and have minimal space. We know that we can not do better
+* This is another way we can use BCR. If you ever reach the BCR and have O(1) additional space, then you know that you can't optimize the big O time or space
 * Best Conceivable Runtime is not a "real" algorithm concept, in that you won't find it in algorithm textbooks. But I have found it personally very useful, when solving problem myself, as well as while coaching people through problems.
 
 ### Handling Incorrect Answers
 * SKIM
 
-### When You've Heard a Question Before 
+### When You've Heard a Question Before
 * SKIM
 
-### The "Perfect" Language for Interviews 
+### The "Perfect" Language for Interviews
 * Some of the verbosity of Java can be reduced by abbreviating
 
 ### What Good Codinng Looks Like
-* Correct 
+* Correct
 * Efficient
-* Simple 
-* Readable 
+* Simple
+* Readable
 * Maintainable
 
-### Use Data Structure Generously 
+### Use Data Structure Generously
 * Suppose you were asked to write a function to add two simple mathematical expressions which are of the form Ax^a+Bx^b+...
 
 		Class ExprTerm{
 			double coeffient;
 			double exponent;
 		}
-		
+
 		ExprTerm[] sum(ExprTerm[] expr1, ExprTerm[] expr2){
 			...
 		}
 
-### Appropriate Code Reuse 
+### Appropriate Code Reuse
 * Sidetacked, cool code:
 
 		int convertFromBase(String number, int base){
@@ -583,14 +583,14 @@ As for Data Structure, you are usually only expected to basics. Here are teh abs
 			}
 			return value;
 		}
-	
-### Modular 
+
+### Modular
 * SKIP
 
 ### Flexible
 * Just because your interviewer only asks you to write code to check if a normal tic-tac-toe board has a winner, doesn't mean you msut assume that it's a 3x3 board. Why not write the code in a more general way that implements it for an NxN board?
 
-### Error checking 
+### Error checking
 * IMPORTANT
 
 # Chapter 8: The offer and Beyond
@@ -598,12 +598,12 @@ page 75
 
 # Chapter 11 Interview Questions
 
-## 1. Array and String 
+## 1. Array and String
 * Hashtable implementation: SKIM
 * ArrayList & Resizable Array: In some languages, array are automatically resizable. The array or list will grow as you append items. In other languages, like Java, the array's size can't change after its creation.
 * StringBuilder: when you concatenate string, it creates new string. Instead, use StringBuilder
 
-		//from 
+		//from
 		String joinWords(String[] words){
 			String sentence= "";
 			for (String w: words){
@@ -611,7 +611,7 @@ page 75
 			}
 			return sentence;
 		}
-		
+
 		//to
 		String joiWords(String[] words){
 			StringBuilder sentence=new StringBuilder();
@@ -620,10 +620,10 @@ page 75
 			}
 			return sentence.toString();
 		}
-		
+
 * Addtional Reading: Hash Table Collision Resolution, Rabin-karp Substring Search
 
-## Interview Question 
+## Interview Question
 
 ### 1.1. Is Unique:
 
@@ -647,35 +647,35 @@ page 75
 	        }
 	        return true;
 	    }
-	
+
 * MY runtime O(N^2) where N is the length, but amortized, CORRECTED: THIS IS NOT AMORTIZED. its just 2 loop
 * Tip 1: use a hashtable; so the searching can go from O(N) to O(1); so the result will be O(N)
 * best conceivable is O(N)
 * https://www.geeksforgeeks.org/determine-string-unique-characters/
 * O(nLogn), sort is nlogn, check is n
 
-		boolean uniqueCharacters(String str) 
-	    { 
-	        char[] chArray = str.toCharArray(); 
-	  
-	        // Using sorting 
-	        // Arrays.sort() uses binarySort in the background 
-	        // for non-primitives which is of O(nlogn) time complexity 
-	        Arrays.sort(chArray); 
-	  
-	        for (int i = 0; i < chArray.length - 1; i++) { 
-	            // if the adjacent elements are not 
-	            // equal, move to next element 
-	            if (chArray[i] != chArray[i + 1]) 
-	                continue; 
-	  
-	            // if at any time, 2 adjacent elements 
-	            // become equal, return false 
+		boolean uniqueCharacters(String str)
+	    {
+	        char[] chArray = str.toCharArray();
+
+	        // Using sorting
+	        // Arrays.sort() uses binarySort in the background
+	        // for non-primitives which is of O(nlogn) time complexity
+	        Arrays.sort(chArray);
+
+	        for (int i = 0; i < chArray.length - 1; i++) {
+	            // if the adjacent elements are not
+	            // equal, move to next element
+	            if (chArray[i] != chArray[i + 1])
+	                continue;
+
+	            // if at any time, 2 adjacent elements
+	            // become equal, return false
 	            else
-	                return false; 
-	        } 
-	        return true; 
-	    } 
+	                return false;
+	        }
+	        return true;
+	    }
 
 
 ### Check Permutation
@@ -719,7 +719,7 @@ page 75
 * Checked the second hint, I can use a hash table, it will become O(N)
 * Check solution: sorting is the simplest. Will take O(NlogN+N)=O(NlogN)
 
-### URLify 
+### URLify
 
 		public static String convert(String s){
 	        String t=s.trim();
@@ -741,7 +741,7 @@ page 75
 	        }
 	        return sb.toString();
 	    }
-	
+
 * It is O(N)
 * checking hint now
 * Check solution now. The solution use only char array and do manipulate the char array directly.
@@ -773,12 +773,12 @@ page 75
 			}
 			return count;
 		}
-	
+
 * Solution: every line is essential. So the logic basically find out the new Index, and then copy the old text to the new index one by one, and then do arithmetic on newIndex-- and newIndex-=3
 * this is true O(N)
 
-## 1.4. Palindrome permutation 
-* So there is a shortcut. Just find out if there is 2 character for each words 
+## 1.4. Palindrome permutation
+* So there is a shortcut. Just find out if there is 2 character for each words
 * I also need to delete the space and lowercase them
 
 		public static boolean check(String s){
@@ -788,7 +788,7 @@ page 75
 		//        System.out.println(t);
 			int[] letters=new int[128];
 			for (int i=0; i<t.length();i++){
-				
+
 				letters[t.charAt(i)]++;
 			}
 			int single=0;
@@ -805,14 +805,14 @@ page 75
 			}
 			return true;
 		}
-	
+
 * realize I allow one single
 * I got basically the same approach as the solution
 * one alternative solution is bit vector, SKIP
 
 MY: Did 3 questions in 2 hours
 
-## 1.5 One Away 
+## 1.5 One Away
 
 * MY: My solution
 
@@ -918,7 +918,7 @@ MY: Did 3 questions in 2 hours
 * Checking hints now
 * Checking answer now. The first solution is basically my solution.
 
-## String Compression 
+## String Compression
 
 		public static String compress(String s){
 	        StringBuilder sb=new StringBuilder();
@@ -945,13 +945,13 @@ MY: Did 3 questions in 2 hours
 	        }
 	        return sb.length()<s.length()?sb.toString():s;
 	    }
-	
+
 * Simple, but will need debugger to find out where the bugs are
 * It is O(N)
 * Check solution, It is pretty similar too. Other alternative is too complicated
 
 ## Rotate Matrix
-* MY: I did it, I know how to manipulate matrix now 
+* MY: I did it, I know how to manipulate matrix now
 
 		public static void main(String[] args) {
 	        int[][] matrix= {
@@ -1002,7 +1002,7 @@ MY: Did 3 questions in 2 hours
 	    }
 
 * Checking solution now
-* Oh, I need to do it in place 
+* Oh, I need to do it in place
 
 		boolean rotate(int[][] matrix){
 			if (matrix.length==0 || matrix.length!=matrix[0].length) return false;
@@ -1019,7 +1019,7 @@ MY: Did 3 questions in 2 hours
 					matrix[last-offset][first]=matrix[last][last-offset];
 					//right->bottom
 					matrix[last][last-offset]=matrix[i][last];
-					//top->right 
+					//top->right
 					matrix[i][last]=top;
 				}
 			}
@@ -1028,13 +1028,317 @@ MY: Did 3 questions in 2 hours
 
 * MY: Did 3 questions today
 
-## recursion
+## Chapter 2. Linked List
+* The disadvantage is you don't have constant time retrieving Kth element
+* The advantage is you can add and remove item from the beginning of the list in constant time
+
+		class Node{
+			Node next=null;
+			int data;
+
+			public Node(int d){
+				data=d;
+			}
+			void appendToTail(int d){
+				Node end=new Node(d);
+				Node n=this;
+				while(n.next!=null){
+					n=n.next;
+				}
+				n.next=end;
+			}
+		}
+
+* In this implementation, we don't have a LinkedList data structure. We access the linked list through a reference to the head Node of the linked list. When you implement the linked list this way, you need to be a bit careful. What if multiple objects need a reference to the linked list, and then the head of the linked list changes? Some object might still be pointing to the old head.
+* We could, if we chose, implement a LinkedList class that wraps the Node class. This would essentailly just have a single mmeber variable the head Node. This would largely resolve the earlier issue.
+
+### Deleting a Node from a Singly Linked List
+
+		Node deleteNode(Node head, int d){
+			if(head==null) return null;
+			Node n=head;
+			if(n.data==d){
+				return head.next;
+			}
+			while(n.next !=null){
+				if(n.next.data==d){
+					n.next=n.next.next;
+					return head;
+				}
+				n=n.next;
+			}
+			return head;
+		}
+
+### If you want to make a1->a2->an->b1->b2->...->bn to a1->b1->a2->b2->a3->b3->...
+* you can have one pointer p1 (the fast pointer) move every two elements for every one move that p2 makes. When p1 hits the end of the linked list, p2 will be at the midpoint. Then move p1 back to the front and begin weaving the lement. On each iteration, p2 selects an element and inserts it after p1.
+
+
+### 2.1 Remove Dups:
+
+		public class RemoveDupLinkedList {
+
+
+
+		    public static void main(String[] args) {
+		        Random random=new Random();
+		        LinkList ll=new LinkList();
+		        for(int i=0;i<10;i++){
+		            ll.insertFirst(random.nextInt(10));
+		        }
+		        ll.displayList();
+
+		        //check dupliate. if the number has not appeared before, store it into a array,
+		        //and check the next with the array
+		        // go through a linked list, check the first element, if it isn't not in checklist
+		        //add it, and then move one
+		        // if its in the checklist, jump 2,
+		        ArrayList<Integer> checklist=new ArrayList<>();
+		        Node current=ll.first;
+		        Node previous=ll.first;
+		        //if contain, remove, if not contain, move to next
+		        while(true)
+		        {
+		//            System.out.println("current.data is "+current.data);
+		            if (!checklist.contains(current.data)) {
+		                if(current.next == null){
+
+		                    System.out.println("this is the end");
+		                    break;
+		                }
+
+		//
+		                else
+		                {
+		                    checklist.add(current.data);
+		//                    System.out.println("add "+current.data);
+		                    previous = current; // go to next link
+		                    current = current.next;
+
+		                }
+
+		            }else{
+		                if(current == ll.first) // if first link,
+		                    ll.first = ll.first.next; // change first
+		                else { // otherwise,
+		                    //previous next go to current next, jump the current, current needs to be at previous again,
+		                    //refinding the next duplicate
+		                    previous.next = current.next; // bypass it
+		                    current = previous.next;
+		                    if(current==null){
+		                        break;
+		                    }
+		//                    System.out.println("jump once");
+		                }
+
+		            }
+
+		        }
+		        ll.displayList();
+
+
+		    }
+		}
+		class Node{
+		    Node next=null;
+		    int data;
+
+		    public Node(int d){
+		        data=d;
+		    }
+		    void appendTail(int d){
+		        Node end=new Node(d);
+		        Node n=this;
+		        while(n.next!=null){
+		            n=n.next;
+		        }
+		        n.next=end;
+		    }
+		}
+
+		class LinkList
+		{
+		    public Node first; // ref to first link on list
+		    // -------------------------------------------------------------
+		    public LinkList() // constructor
+		    {
+		        first = null; // no items on list yet
+		    }
+		    // -------------------------------------------------------------
+		    public boolean isEmpty() // true if list is empty
+		    {
+		        return (first==null);
+		    }
+		    // -------------------------------------------------------------
+		// insert at start of list
+		    public void insertFirst(int d)
+		    { // make new link
+		        Node newLink = new Node(d);
+		        newLink.next = first; // newLink --> old first
+		        first = newLink; // first --> newLink
+		    }
+		    // -------------------------------------------------------------
+		    public Node deleteFirst() // delete first item
+		    { // (assumes list not empty)
+		        Node temp = first; // save reference to link
+		        first = first.next; // delete it: first-->old next
+		        return temp; // return deleted link
+		    }
+
+		    // -------------------------------------------------------------
+		    public void displayList()
+		    {
+		        System.out.print("List (first-->last): ");
+		        Node current = first; // start at beginning of list
+		        while(current != null) // until end of list,
+		        {
+		//                current.displayLink(); // print data
+		            System.out.print(current.data+" ");
+		            current = current.next; // move to next link
+		        }
+		        System.out.println("");
+		    }
+		    // -------------------------------------------------------------
+		    public Node find(int key) // find link with given key
+		    { // (assumes non-empty list)
+		        Node current = first; // start at 'first'
+		        while(current.data != key) // while no match,
+		        {
+		            if(current.next == null) // if end of list,
+		                return null; // didn’t find it
+		            else // not end of list,
+		                current = current.next; // go to next link
+		        }
+		        return current; // found it
+		    }
+		    // -------------------------------------------------------------
+		    public Node delete(int key) // delete link with given key
+		    { // (assumes non-empty list)
+		        Node current = first; // search for link
+		        Node previous = first;
+		        while(current.data != key)
+		        {
+		            if(current.next == null)
+		                return null; // didn’t find it
+		            else
+		            {
+		                previous = current; // go to next link
+		                current = current.next;
+		            }
+		        } // found it
+		        if(current == first) // if first link,
+		            first = first.next; // change first
+		        else // otherwise,
+		            previous.next = current.next; // bypass it
+		        return current;
+		    }
+		    // -------------------------------------------------------------
+
+		} // end class LinkList
+
+* delete an element essentially is previous.next=current.next
+* move one is essentially, previous=current; current=current.next;
+* check answer:
+
+		void deleteDups(LinkedListNode n){
+			HashSet<Integer> set=new HashSet<Integer>();
+			LinkedListNode previous=null;
+			while (n!=null){
+				if(set.contains(n.data)){
+					previous.next=n.next;
+				}else{
+					set.add(n.data);
+					previous=n;
+				}
+				n=n.next;
+			}
+
+		}
+
+* if temporary buffer is not allowed:
+
+		void deleteDups(LinkedListNode head){
+			LinkedListNode current=head;
+			while(current!=null){
+				//remote all future nodes that have the same value
+				LinkedListNode runner=current;
+				while(runner.next !=null){
+					if(runner.next.data=current.data){
+						runner.next=runner.next.next;
+					}else{
+						runner-runner.next;
+					}
+				}
+				current=current.next;
+			}
+		}
+
+## Return Kth to Last
+
+* I already make count wrong
+* this counts 10. Use this one:
+
+		int count=0;
+        while(n!=null){
+            count++;
+            n=n.next;
+        }
+
+* this counts 9
+
+		int count=0;
+		while(n.next!=null){
+			count++;
+			n=n.next;
+		}
+
+* My code:
+
+		public static void main(String[] args) {
+		        int k=2;
+		        Random random=new Random();
+		        LinkList ll=new LinkList();
+		        for(int i=0;i<10;i++) {
+		            ll.insertFirst(random.nextInt(10));
+		        }
+		        ll.displayList();
+		        Node n=ll.first;
+		        int count=0;
+		        while(n!=null){
+		            count++;
+		            n=n.next;
+		        }
+		        System.out.println("count is "+count);
+		        int ktolast=count-k;
+		        Node m=ll.first;
+		        int i=0;
+		        while(m.next!=null&&i<count-k-1){
+		            System.out.println(m.data);
+		            m=m.next;
+		            i++;
+
+		        }
+		        System.out.println("last k is "+m.data);
+		    }
+
+* I didn't do && I did ||, because I did ||, the first condition is still true, so it still goes on,
+* second, 10-2 is 8, this is no the position, I need it to be 10-2-1
+
+
+
+## Chapter 8: recursion
+* By CS Dojo: https://www.youtube.com/watch?v=B0NtAFf4bvU
+* I need the definition writing
+* I need to know how to do recursion in tree and linked list
+
+
+### GeekforGeek
 I checked the chapter but it's not really informative. So I check geekForGeek and [here](https://www.geeksforgeeks.org/recursion/) it is.
 
 Certain problems can be solved quite easily, such as [Towers of Hanoi(TOH)](https://www.geeksforgeeks.org/c-program-for-tower-of-hanoi/),[inorder/Preorder/Postorder Tree Traversals](https://www.geeksforgeeks.org/tree-traversals-inorder-preorder-and-postorder/), [DFS of Graph](https://www.geeksforgeeks.org/depth-first-search-or-dfs-for-a-graph/)
 
-**What is base condition in recursion?**    
-In the recursive program, the solution to the base case is provided and the solution of the bigger problem is expressed in terms of smaller problems 
+##What is base condition in recursion?
+In the recursive program, the solution to the base case is provided and the solution of the bigger problem is expressed in terms of smaller problems
 
         int fact(int n)
         {
@@ -1043,46 +1347,46 @@ In the recursive program, the solution to the base case is provided and the solu
             else    
                 return n*fact(n-1);    
         }
-        
+
 In the above example, base case for n < = 1 is defined and larger value of number can be solved by converting to smaller one till base case is reached.
 
-**How a particular problem is solved using recursion?**
-1. represent a problem in terns of one or more smaller problems
-2. add one or more base conditions that stop the recursion 
-3. ex: when compute factorial n if we know factorial of (n-1). the base case for factorial would be n=0. We return 1 when n=0 
+###How a particular problem is solved using recursion?
+1. represent a problem in terms of one or more smaller problems
+2. add one or more base conditions that stop the recursion
+3. ex: when compute factorial n if we know factorial of (n-1). the base case for factorial would be n=0. We return 1 when n=0
 
 **Why Stack Overflow error occurs in recursion?**
 when the base case is never reached or not defined     
-for example, if (n==100) but n can never become 100 
+for example, if (n==100) but n can never become 100
 
 **What is difference between tailed and non-tailed recursion?**    
 A recursive function is tail recursive when recursive call is the last thing executed by the function.
 
-        // A Java program to demonstrate working of 
-        // recursion 
-        class GFG{ 
-        static void printFun(int test) 
-        { 
-            if (test < 1) 
-                return; 
+        // A Java program to demonstrate working of
+        // recursion
+        class GFG{
+        static void printFun(int test)
+        {
+            if (test < 1)
+                return;
             else
-            { 
-                System.out.printf("%d ",test); 
-                printFun(test-1); // statement 2 
-                System.out.printf("%d ",test); 
-                return; 
-            } 
-        } 
-          
-        public static void main(String[] args) 
-        { 
-            int test = 3; 
-            printFun(test); 
-        } 
-        } 
-          
+            {
+                System.out.printf("%d ",test);
+                printFun(test-1); // statement 2
+                System.out.printf("%d ",test);
+                return;
+            }
+        }
+
+        public static void main(String[] args)
+        {
+            int test = 3;
+            printFun(test);
+        }
+        }
+
         // This code is contributed by  
-        // Smitha Dinesh Semwal 
+        // Smitha Dinesh Semwal
 
 Output :    
 3 2 1 1 2 3
@@ -1094,43 +1398,43 @@ A different way to view it
 
 **Advantage: recursion provides a clean and simple way to write code. Some problems are inherently recurisve like tree traversals. We can write such codes also iteratively with the help of a stack data structure. For example refer [inorder tree traversal without recursion](https://www.geeksforgeeks.org/inorder-tree-traversal-without-recursion/), [iterative Tower of Hanoi](https://www.geeksforgeeks.org/iterative-tower-of-hanoi/)**
 
-## Practice Questions for Recursion | Set 1
+### Practice Questions for Recursion | Set 1
 
         int fun1(int x, int y)  
-        { 
-          if(x == 0) 
-            return y; 
+        {
+          if(x == 0)
+            return y;
           else
-            return fun1(x - 1,  x + y); 
-        } 
+            return fun1(x - 1,  x + y);
+        }
 
 The function fun() calculates and returns ((1 + 2 … + x-1 + x) +y) which is x(x+1)/2 + y. For example if x is 5 and y is 2, then fun should return 15 + 2 = 17.
 
-MY: 
+MY:
 fun1(9,9)
 fun1(8,18)
 fun1(7,25)
 fun(1,?)
 fun1(0) return 1+?
 
-        void fun2(int arr[], int start_index, int end_index) 
-        { 
+        void fun2(int arr[], int start_index, int end_index)
+        {
           if(start_index >= end_index)    
-             return; 
+             return;
           int min_index;  
           int temp;  
-          
+
           // Assume that minIndex() returns index of minimum value in  
-            array arr[start_index...end_index] 
-          min_index = minIndex(arr, start_index, end_index); 
-          
-          temp = arr[start_index]; 
-          arr[start_index] = arr[min_index]; 
+            array arr[start_index...end_index]
+          min_index = minIndex(arr, start_index, end_index);
+
+          temp = arr[start_index];
+          arr[start_index] = arr[min_index];
           arr[min_index] = temp;         
-          
-          fun2(arr, start_index + 1, end_index); 
-        } 
-        
+
+          fun2(arr, start_index + 1, end_index);
+        }
+
 Answer: The function fun2() is a recursive implementation of Selection Sort.
 
 MY: Will get back to it a bit later
@@ -1138,14 +1442,14 @@ MY: Will get back to it a bit later
 ## Practice Questions for Recursion | Set 2
 
     /* Assume that n is greater than or equal to 1 * /
-    int fun1(int n) 
-    { 
-      if(n == 1) 
-         return 0; 
+    int fun1(int n)
+    {
+      if(n == 1)
+         return 0;
       else
-         return 1 + fun1(n/2); 
+         return 1 + fun1(n/2);
     }  
-    
+
 Answer: The function calculates and returns floor(log2(n)). For example, if n is between 8 and 15 then fun1() returns 3. If n is between 16 to 31 then fun1() returns 4.
 
 MY: (I did the staircase) fun1(4)=1+fun1(2)=1+1+fun(1)=1+1+0=2
@@ -1153,25 +1457,25 @@ MY: (I did the staircase) fun1(4)=1+fun1(2)=1+1+fun(1)=1+1+0=2
 Question 2  
 
     /* Assume that n is greater than or equal to 0 * /
-    void fun2(int n) 
-    { 
-      if(n == 0) 
-        return; 
-      
-      fun2(n/2); 
-      printf("%d", n%2); 
+    void fun2(int n)
+    {
+      if(n == 0)
+        return;
+
+      fun2(n/2);
+      printf("%d", n%2);
     }   
-    
+
 MY: I did the staircase, n==0 should be n<=1; fun2(8) print out 100;
 
 MY: Okay, reading and intepretating seems to be no problem, but writing one that is a lot of problem. Where can I practice it?
 
 Okay I find this link. This is perfect. [Link](https://www.geeksforgeeks.org/recursion-practice-problems-solutions/)
 
-### Recursive Functions 
+### Recursive Functions
 SKIM, nothing useful
 
-### Tail Recursion 
+### Tail Recursion
 Nothing useful
 
 Dive straight to the problem: [recursive palindrome](https://www.youtube.com/watch?v=7uu8WfDdsRc)
@@ -1179,11 +1483,3 @@ Dive straight to the problem: [recursive palindrome](https://www.youtube.com/wat
 [recursion countdown](https://www.youtube.com/watch?v=FCGF7YB6g-4&list=PLGSxjw5t3yJs4i3RONXvShSnXflLp5fXS&index=2)
 
 Sometimes geekforgeek's question is too hard and unrelated, so I just do a loop from ctci,leetcode->DS->geekforgeek->ctci,leetcode; thats why I need all three to be able to study it effectively, geekforgeek should always be supplimentary
-
-
-
-
-
-
-
-
