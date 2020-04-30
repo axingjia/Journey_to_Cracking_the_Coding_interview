@@ -1313,6 +1313,7 @@ MY: Did 3 questions in 2 hours
 		        Node m=ll.first;
 		        int i=0;
 		        while(m.next!=null&&i<count-k-1){
+					//check if m is the last node, if it is the last node, stop traversing
 		            System.out.println(m.data);
 		            m=m.next;
 		            i++;
@@ -1330,7 +1331,51 @@ MY: Did 3 questions in 2 hours
 * By CS Dojo: https://www.youtube.com/watch?v=B0NtAFf4bvU
 * I need the definition writing
 * I need to know how to do recursion in tree and linked list
+* reverse a linked list: https://www.youtube.com/watch?v=KYH83T4q6Vs
+* Pattern: ReversePrint:
 
+		void ReversePrint(Node p){
+			if (p==null){
+				return;
+			}
+			ReversePrint(p.next);
+			printf("%d",p.data);
+		}
+
+* Pattern: factorial:
+
+		int fact(int n)
+		{
+			if (n < = 1) // base case
+				return 1;
+			else    
+				return n*fact(n-1);    
+		}
+
+* Pattern: Reverse a Linked list
+		//https://www.youtube.com/watch?v=KYH83T4q6Vs
+		//head->100->200->150->250->null
+		void Reverse(Node p){
+			if(p.next==null){
+				//when p is 250
+				head=p;
+				return;
+			}
+			Revser(p.next);
+			//do 2 things: reverse the link (delete and relinked to null and relink)
+			//and point the second node to null
+			Node q=p.next; //p will be 150 so p.next is 250
+			q.next=p; //250's next is 150
+			p.next=null;
+			//this can be shorted as p.next.next=p
+		}
+
+* pattern: a=b; b=a will make a,b equals to
+* pattern: q=p.next; q.next=p; will make reverse a link of q, which is p.next
+* in other word, will reverse what p is pointing to
+* MY: pattern: every statement after the recursion will execute at comingback
+* search a linked list recursively: https://www.youtube.com/watch?v=7sikRsNcqgM
+* if head is null, return false; 2. if head's key is same as x, return true; else return search(head.next,x)
 
 ### GeekforGeek
 I checked the chapter but it's not really informative. So I check geekForGeek and [here](https://www.geeksforgeeks.org/recursion/) it is.
