@@ -1048,6 +1048,7 @@ MY: Did 3 questions in 2 hours
 				n.next=end;
 			}
 		}
+* while(n.next!=null) n=n.next; this finds out the the end of the linked list, and put it to n;
 
 * In this implementation, we don't have a LinkedList data structure. We access the linked list through a reference to the head Node of the linked list. When you implement the linked list this way, you need to be a bit careful. What if multiple objects need a reference to the linked list, and then the head of the linked list changes? Some object might still be pointing to the old head.
 * We could, if we chose, implement a LinkedList class that wraps the Node class. This would essentailly just have a single mmeber variable the head Node. This would largely resolve the earlier issue.
@@ -1325,6 +1326,192 @@ MY: Did 3 questions in 2 hours
 * I didn't do && I did ||, because I did ||, the first condition is still true, so it still goes on,
 * second, 10-2 is 8, this is no the position, I need it to be 10-2-1
 
+* recursively:
+
+		int printKthToLast(LinkedListNode head, int k){
+			if(head=null){
+				return 0;
+			}
+			int index=printKthToLast(head.next,k)+1;
+			if(index=k){
+				println(k+"th to last node is"+head.data);
+			}
+			return index;
+		}
+
+* this is kind of like reverse a linked list
+* Approach B: use C++: SKIP
+
+
+* Approach C: Create a Wrapper Class: this way we can mimic passing by reference:
+
+		class Index{
+			public int value=0;
+		}
+
+		LinkedListNode kthToLast(LinkedListNode head, int k){
+			Index idx= new Index();
+			return kthToLast(head, k, idx);
+		}
+		LinkedListNode kthToLast(LinkedListNode head, int k, Index idx){
+			if(head==null){
+				return null;
+			}
+			LinkedListNode node=kthToLast(head.next,k,idx);
+			idx.value=idx.value+1;
+			if(idx.value==k){
+				return head;
+			}
+			return node;
+		}
+		// 100->200->150->250->null
+		k(100) node=kthToLast(200, k, idx)=Node(150) idx=4;
+		~~k(200)~~ node=kthTolast(150,k, idx)=Node(150) idx=3
+		~~k(150)~~ node=kthToLast(null,k,idx)=null; value=k, return head=150;idx=2;
+		~~k(250)~~ idx=1; node=kthToLast(null,k,idx)=null; idx=1;head=250;
+		~~null~~
+		I just can't wrap my head around
+
+* so it returns the current node(head) when value==k, otherwise it ~~returns null~~; otherwise it returns the next recursive call's return value
+
+* Solution #3: Iterative: place two pointer k nodes apart, when the ahead p1 gets to the end, p2 will be at the correct place
+
+		LinkedListNode nthToLast(LinkedListNode head, int k){
+			LinkedListNode p1=head;
+			LinkedListNode p2=head;
+			for (int i=0;i<k;i++){
+				if(p1==null) return null//out of bound;
+				p1=p1.next;
+			}
+			while (p1!=null){
+				p1=p1.next;
+				p2=p2.next;
+			}
+			return p2;
+		}
+
+## Delete Middle Node
+* didn't read carefully: only have access to that node
+* how do I access the beginning of the list
+* check answer
+* copy the data from the next code and then delete the next code
+
+		boolean deleteNode(LinkedListNode n){
+			if(n==null ||n.next==null){
+				return false;
+			}
+			LinkedListNode next=n.next;
+			n.data=next.data;
+			n.next=next.next;
+			return true;
+		}
+
+* Note that the problem can not be solved if the node to be deleted is the last node in the linked list. That's okay. One solution is marking the node as dummy. MY: make data=MIN_VALUE;
+
+## Partition
+
+		public static void main(String[] args) {
+		        //make it into two linked list and then link the tail of the first list to the head of the first
+		        LinkedList ll=new LinkedList();
+		        ll.appendTail(100);
+		        ll.appendTail(400);
+		        ll.appendTail(150);
+		        ll.appendTail(200);
+		        ll.appendTail(250);
+		        ll.appendTail(300);
+		        ll.displayList();
+		        LinkedList ll1=new LinkedList();
+		        LinkedList ll2=new LinkedList();
+		        Node llcurr=ll.head;
+		        while(llcurr!=null){
+		            if(llcurr.data>=200){
+		                ll2.appendTail(llcurr.data);
+		            }else{
+		                ll1.appendTail(llcurr.data);
+		            }
+		            llcurr=llcurr.next;
+
+		        }
+		        LinkedList llfinal=new LinkedList();
+		        Node pointer=ll1.head;
+		        while(pointer!=null){
+		            llfinal.appendTail(pointer.data);
+		            pointer=pointer.next;
+		        }
+		        pointer=ll2.head;
+		        while(pointer!=null){
+		            llfinal.appendTail(pointer.data);
+		            pointer=pointer.next;
+		        }
+		        llfinal.displayList();
+
+		    }
+		    public static class Node{
+		        int data=0;
+		        Node next=null;
+
+		        public Node(int d){
+		            data=d;
+		        }
+		        public void appendTail(int d){
+		            Node end=new Node(d);
+		            Node n=this;
+		            while(n.next!=null){
+		                n=n.next;
+		            }
+		            n.next=end;
+		        }
+		    }
+
+		    public static class LinkedList{
+		        Node head=null;
+		        Node tail=null;
+		        public void displayList(){
+		            System.out.print("The list display: ");
+		            Node current=head;
+		            while(current!=null){
+		                System.out.print(current.data+" ");
+		                current=current.next;
+		            }
+		            System.out.println();
+		        }
+		        public void appendTail(int d){
+		            Node end=new Node(d);
+
+		            if(head==null){
+		                head=end;
+		                return;
+		            }
+		            Node n=head;
+		            while(n.next!=null){
+		                n=n.next;
+		            }
+		            n.next=end;
+		            tail=end;
+		        }
+		    }
+
+* this solution is O(2N^2), certainly not optimal. but it works
+* check answer
+
+		LinkedListNode partition(LinkedListNode node, int x){
+			LinkedListNode head=node;
+			LinkedListNode tail=node;
+			while (node !=null){
+				LinkedListNode next=node.next;
+				if(node.data<x){
+					node.next=head;
+					head=node;
+				}else{
+					tail.next=node;
+					tail=node;
+				}
+				node=next;
+			}
+			tail.next=null;
+			//the head has changed, so we need to return it to the user
+			return head;
+		}
 
 
 ## Chapter 8: recursion
@@ -1361,7 +1548,7 @@ MY: Did 3 questions in 2 hours
 				head=p;
 				return;
 			}
-			Revser(p.next);
+			Reverse(p.next);
 			//do 2 things: reverse the link (delete and relinked to null and relink)
 			//and point the second node to null
 			Node q=p.next; //p will be 150 so p.next is 250
@@ -1371,7 +1558,7 @@ MY: Did 3 questions in 2 hours
 		}
 
 * pattern: a=b; b=a will make a,b equals to
-* pattern: q=p.next; q.next=p; will make reverse a link of q, which is p.next
+* pattern: q=p.next; q.next=p; will make reverse a link of q, which is p.next //
 * in other word, will reverse what p is pointing to
 * MY: pattern: every statement after the recursion will execute at comingback
 * search a linked list recursively: https://www.youtube.com/watch?v=7sikRsNcqgM
