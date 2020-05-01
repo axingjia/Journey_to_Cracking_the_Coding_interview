@@ -1377,6 +1377,16 @@ MY: Did 3 questions in 2 hours
 * search a linked list recursively: https://www.youtube.com/watch?v=7sikRsNcqgM
 * if head is null, return false; 2. if head's key is same as x, return true; else return search(head.next,x)
 
+		boolean search(Node head, int x){
+			if(head==null){
+				return false;
+			}
+			if(head->key==x){
+				return true;
+			}
+			return search(head.next,x);
+		}
+
 ### GeekforGeek
 I checked the chapter but it's not really informative. So I check geekForGeek and [here](https://www.geeksforgeeks.org/recursion/) it is.
 
