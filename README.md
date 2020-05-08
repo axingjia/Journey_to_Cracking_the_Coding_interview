@@ -1492,7 +1492,45 @@ MY: Did 3 questions in 2 hours
 		    }
 
 * this solution is O(2N^2), certainly not optimal. but it works
-* check answer
+* check answers.
+* The first solution is similar to mine:
+
+		LinkedListNode partition(LinkedListNode node, int x){
+			LinkedListNode before start=null;
+			LinkedListNode before end=null;
+			LinkedListNode afterstart=null;
+			LinkedListNode afterend=null;
+
+			while (node!=null){
+				LinkedListNode next=node.next;
+				node.next=null;
+				if(node.data<x){
+					if (beforeStart ==null){
+						beforeStart=node;
+						beforeEnd=beforeStart;
+					}else{
+						beforeEnd.next=node;
+						beforeEnd=node;
+					}
+				}else{
+					if (afterStart==null){
+						afterStart=node;
+						afterEnd=afterStart;
+					}else{
+						afterEnd.next=node;
+						afterEnd=node;
+					}
+				}
+				node=next;
+			}
+			if (beforeStart=null){
+				return afterStart;
+			}
+			beforeEnd.next=afterStart;
+			return beforeStart;
+		}
+
+* check answer 2
 
 		LinkedListNode partition(LinkedListNode node, int x){
 			LinkedListNode head=node;
@@ -1507,10 +1545,458 @@ MY: Did 3 questions in 2 hours
 					tail=node;
 				}
 				node=next;
+				//head is pointing to new node, node is node next,
+				//even node.next is to head, node is pointing to node.next
+				//then node.next is pointing to head, which is node,
 			}
 			tail.next=null;
 			//the head has changed, so we need to return it to the user
 			return head;
+		}
+
+		100->400->200->150->600
+		node=100;head=100; tail=100, next=400; x=150;
+		node.next=100.next=100; head=100;
+		node=400;
+		next=node.next=400.next=200; node.next=100;head=400;
+		PAUSE
+
+* This is hell of confusing, PAUSE
+* I like my solution the best, clean, easy to understand
+
+## Sum List
+
+		public static void main(String[] args) {
+		        LinkedList ll1=new LinkedList();
+		        LinkedList ll2= new LinkedList();
+		//        ll1.appendTail(7);
+		//        ll1.appendTail(1);
+		//        ll1.appendTail(6);
+		        ll1.appendTail(9);
+		        ll1.appendTail(9);
+		        ll1.appendTail(9);
+		        ll1.displayList();
+		        ll2.appendTail(1);
+		//        ll2.appendTail(5);
+		//        ll2.appendTail(9);
+		//        ll2.appendTail(2);
+
+		        ll2.displayList();
+		        LinkedList ll3=new LinkedList();
+		        System.out.println(ll1.size());
+		        //iterate the longest, add the number together, if node is null, then use 0
+		        int max=Math.max(ll1.size(),ll2.size());
+		        Node ll1pointer=ll1.head;
+		        Node ll2pointer=ll2.head;
+		        int carryover=0;
+		        while (ll1pointer!=null || ll2pointer!=null||carryover!=0){
+		            int ll1num=0;
+		            int ll2num=0;
+
+		            if(ll1pointer==null){
+		                ll1num=0;
+		            }else{
+		                ll1num=ll1pointer.data;
+		            }
+		            if(ll2pointer==null){
+		                ll2num=0;
+		            }else{
+		                ll2num=ll2pointer.data;
+		            }
+
+		            int ll3num=ll1num+ll2num+carryover;
+		            carryover=ll3num/10;
+		            ll3num=ll3num%10;
+		            ll3.appendTail(ll3num);
+		            if(ll1pointer==null){
+
+		            }else{
+		                ll1pointer=ll1pointer.next;
+		            }
+		            if(ll2pointer==null){
+
+		            }else{
+		                ll2pointer=ll2pointer.next;
+		            }
+		            //how to do carry over,
+		            //save one as carry over and add one
+
+		        }
+		        ll3.displayList();
+
+		    }
+		    public static class Node{
+		        int data=0;
+		        Node next=null;
+
+		        public Node(int d){
+		            data=d;
+		        }
+		        public void appendTail(int d){
+		            Node end=new Node(d);
+		            Node n=this;
+		            while(n.next!=null){
+		                n=n.next;
+		            }
+		            n.next=end;
+		        }
+		    }
+
+		    public static class LinkedList{
+		        Node head=null;
+		        Node tail=null;
+		        public int size(){
+		            int counter=0;
+		            Node pointer=head;
+		            while(pointer!=null){
+		                counter++;
+		                pointer=pointer.next;
+		            }
+		            return counter;
+		        }
+		        public void displayList(){
+		            System.out.print("The list display: ");
+		            Node current=head;
+		            while(current!=null){
+		                System.out.print(current.data+" ");
+		                current=current.next;
+		            }
+		            System.out.println();
+		        }
+		        public void appendTail(int d){
+		            Node end=new Node(d);
+
+		            if(head==null){
+		                head=end;
+		                return;
+		            }
+		            Node n=head;
+		            while(n.next!=null){
+		                n=n.next;
+		            }
+		            n.next=end;
+		            tail=end;
+		        }
+		    }
+
+* I use the abstraction. I like it. I like abstraction.
+* Check answer:
+
+		LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2){
+			return addLists(l1,l2,0);
+		}
+		LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2, int carry){
+			if (l1==null && l2==null && carry ==0){
+				return null;
+			}
+
+			LinkedListNode result =new LinkedListNode();
+			int value=carry;
+			if(l1!=null){
+				value+=l1.data;
+			}
+			if(l2!=null){
+				value+=l2.data;
+			}
+			result.data=value%10;
+			if (l1!=null || l2!=null){
+				LinkedListNode more= addLists(l1==null?null:l1.next, l2==null?null:l2.next, value>=10?1:0);
+				result.setNext(more);
+			}
+			return result;
+		}
+
+		//7->1->6
+		//5->9->2
+		add(7,5,0) result=2 result.setNext(1->9->null) return 2->1->9->null
+		more=addList(1,9,1) result=1 result.setNext(9->null) return 1->9->null
+		more=addList(6,2,1) result=9 result.setNext(null) return 9->null
+		more=addList(null,null,0) returns;
+
+* Finally understand this code, I misunderstand when the tail setNext. It is supposed to set to null and I set it to a number
+* Answer for:
+
+		class PartialSum{
+			public LinkedListNode sum=null;
+			public int carry=0;
+		}
+		LinkedListNode addLists(LinkedListNode l1, LinkedListNode l2){
+			int len1=length(l1);
+			int len2=length(l2)
+
+			if(len1<len2){
+				l1=ladList(l1,len2-len1);
+			}else{
+				l2=padList(l2,len1-len2);
+			}
+			//add list
+			PartialSum sum=addListHelper(l1,l2);
+
+			//if there was a carry value left over, insert this at the front of the list, otherwise, just return the linked list
+			if(sum.carry==0){
+				return sum.sum;
+			}else{
+				LinkedListNode result=insertBefore(sum.sum,sum.carry);
+				return result;
+			}
+		}
+
+		PartialSum addListHelper(LinkedListNode l1, LinkedListNode l2){
+			if (l1==null &&l2==null){
+				PartialSum sum=new PartialSum();
+				return sum;
+			}
+			//add smaller digits recursively
+			PartialSum sum=addListHelper(l1.next,l2.next);
+
+			//add carry to current data;
+			int val=sum.carry+l1.data+l2.data;
+
+			//Insert sum of current digits
+			LinkedListNode full_result= insertBefore(sum.sum, val%10);
+
+			//return sum so far, and the carry value
+			sum.sum=full_result;
+			sum.carry=val/10;
+			return sum;
+
+
+		}
+
+		//LinkedListNode padList(LinkedListNode l, int padding){
+			LinkedListNode head=l;
+			for (int i=0; i<padding;i++){
+				head=insertBefore(head,0);
+			}
+			return head;
+		}
+
+		// Helper function to insert node in the front of a linked list
+		LinkedListNode insertBefore(LinkedListNode list, int data){
+			LinkedListNode node =new LinkedListNode(data);
+			if(list!=null){
+				node.next=list;
+			}
+			return node;
+
+		}
+
+* I need to figure out the relationship between insertbefore and recursion
+* **1. When writing recursive function, try to write down all the recursive call**
+* **2. When writing recursive function, use a table to write down all the call**
+
+# 2.6 Palindrome
+* I will find the size of the linked list, if its an odd number,
+* Check hints: 1. I can reverse the list, 2. I can use stack, 3. I can do it recursively if I know the size
+* I failed to reverse because the reverse algorithm needs a head. Below is the reverse recursive function
+
+		void Reverse(Node p){
+			if(p.next==null){
+				//when p is 250
+				head=p;
+				return;
+			}
+			Reverse(p.next);
+			//do 2 things: reverse the link (delete and relinked to null and relink)
+			//and point the second node to null
+			Node q=p.next; //p will be 150 so p.next is 250
+			q.next=p; //250's next is 150
+			p.next=null;
+			//this can be shorted as p.next.next=p
+		}
+
+* check answer. Answer 1 uses a  while loop:
+
+		boolean isPalindrome(LinkedListNode head){
+			LinkedListNode reversed=reverseAndClone(head);
+			return isEqual(head,reversed);
+		}
+		LinkedListNode reverseAndClone(LinkedListNode node){
+			LinkedListNode n=new LinkedListNode(node.data);
+			while(node!=null){
+				n.next=head;
+				head=n;
+				node=node.next;
+			}
+			return head;
+
+		}
+		boolean isEqual(LinkedListNode one, LinkedListNode two){
+			while(one!=null &&two!=null){
+				if(one.data!=two.data){
+					return false;
+				}
+				one=one.next;
+				two=two.next;
+			}
+			return one==null&&two==null;
+		}                                
+
+* Solution 2, iterative approach:
+
+		boolean isPalindrom(LinkedListNode head){
+			LinkedListNode fast=head;
+			LinkedListNode slow=head;
+
+			Stack<Integer> stack=new Stack<Integer>();
+
+			while (fast!=null &&fast.next!=null){
+				stack.push(slow.data);
+				slow=slow.next;
+				fast=fast.next.next;
+			}
+			// Has odd number of elements, so skip the middle element
+			if(fast!=null){
+				slow=slow.next;
+			}
+
+			while (slow !=null){
+				int top=stack.pop().intValue();
+
+				if(top!=slow.data){
+					return false;
+				}
+				slow=slow.next;
+			}
+			return true;
+		}
+
+* Solution 3: recrusive:
+
+
+		boolean isPalindrome(LinkedListNode head){
+			int length=lengthOfList(head);
+			Result p=isPalindromeRecurse(head,length);
+			return p.result;
+		}
+		Result isPalindromeRecurse(LinkedListNode head, int length){
+			if(head==null||length<=0){
+				return new Result(head,true);
+			}else if(length==1){
+				return new Result(head.next,true);
+			}
+
+			Result res=isPalindromeRecurse(head.next,length-2);
+			if(!res.result ||res.node==null){
+					return res;
+
+			}
+
+			res.result=(head.data==res.node.data);
+
+			res.node=res.node.next;
+
+			return res;
+		}
+
+		int lengthOfList(LinkedListNode n){
+			int size=0;
+			while (n!=null){
+				size++;
+				n=n.next;
+			}
+			return size;
+		}
+
+# 2.7 Intersection
+* how to check exactly the same, through reference? Answer: you can just check equals to
+* I mistakenly thought it can be intersect in between and it will split at the end again, which stops this answer from working
+* check answer:
+
+		LinkedListNode findIntersection(LinkedListNode list1, LinkedListNode list2){
+			if(list1==null || list2==null) return null;
+			Result result1=getTailAndSize(list1);
+			Result result2=getTailAndSize(list2);
+
+			// If different tail nodes, then there's no intersection.
+			if(result.tail!=result2.tail){
+				return null;
+			}
+
+			//Set pointer to the start of each linked list
+			LinkedListNode shorter=result1.size<result2.size?list1:list2;
+			LinkedListNode longer=result1.size<result2.size?list2:list1;
+
+			longer=getKthNode(longer,Math.abs(result1.size-result2.size));
+
+			//move both pointers until you have a collision
+			while (shorter!=longer){
+				shorter.shorter.next;
+				longer=longer.next;
+			}
+
+			//Result either one
+			return longer;
+		}
+
+		class Result {
+			public LinkedListNode tail;
+			public int size;
+			public Result(LinkedListNode tail, int size){
+				this. tail=tail;
+				this.size=size;
+			}
+		}
+
+		Result getTailAndSize(LinkedListNode list){
+			if(list==null) return null;
+			int size=1;
+			LinkedListNode current=list;
+			while (current.next !=null){
+				size++;
+				current=current.next;
+			}
+			return new Result(current,size);
+		}
+
+		LinkedListNode getKthNode(LinkedListNode head, int k){
+			LinkedListNode current=head;
+			while (k>0 &&current !=null){
+				current=current.next;
+				k--;
+			}
+			return current;
+		}
+
+* I mean, I understand the answer. It is very clear;
+
+# 2.8 Loop Detection
+* If I would have done it, I will check every save every node into a arrayList, and check every node after every traversal
+* check geekforgeek, it is indeed a solution: https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
+* an explanation for the solution: https://www.youtube.com/watch?v=-YiQZi3mLq0
+
+		N=D+K+iC where N is how many step you run, D is the distance you before the loop, K is the distance inside the loop, C is the length of the loop, i is how many loop
+		2N=D+K+jC where 2N is how many step you run,
+
+		so N=(j-i)C, so C=(j-i)/N=a number, so there will always be a number
+
+		LinkedListNode FindBeginning(LinkedListNode head){
+			LinkedListNode slow=head;
+			LinkedListNode fast-head;
+
+			//Find meeting point. This will be LOOP_SIZE-k steps into the linked list
+			while (fast !=null && fast.next !=null){
+				slow=slow.next;
+				fast=fast.next.next;
+				if(slow==fast){
+					break;
+				}
+			}
+
+			//Error checking --no meeting point, and therefore no loop
+			if (fast==null || fast.next==null){
+				return null;
+			}
+
+			//Move slow to head. keep fast at meeting point. Each are k steps from the Loop start. If they move at the same pace, t hey must meet at Loop start.
+			slow=head;
+			while(slow!=fast){
+				slow=slow.next;
+				fast=fast.next;
+			}
+
+			//both now point to the start of the loop
+			return fast; 
 		}
 
 
@@ -1573,6 +2059,13 @@ MY: Did 3 questions in 2 hours
 			}
 			return search(head.next,x);
 		}
+
+* understand any recursive code: https://www.youtube.com/watch?v=B3U6LExgevE
+* ESSENTIAL: Draw the recursive tree
+* fibonacci recursive is like a postorder traversal
+* reverse a linkedlist, when the sub recursive function returns, the super function returns too
+* how to write recursive function: https://www.youtube.com/watch?v=ggk7HbcnLG8. How to translate it to linkedlist
+
 
 ### GeekforGeek
 I checked the chapter but it's not really informative. So I check geekForGeek and [here](https://www.geeksforgeeks.org/recursion/) it is.
