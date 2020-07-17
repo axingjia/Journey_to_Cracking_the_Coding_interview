@@ -6,6 +6,9 @@ If I have the book I can probably take notes on the book, but it wouldn't beat t
 
 And taking notes on github means I can check it anywhere, don't know the usefulness of this, but I can at least try.
 
+DISCLAIMER: This repo contains copyrighted material the use of which has not always been specifically authorized by the copyright owner. In accord with the purpose of notetaking/search/retrieval in an easy way and convenient way, we are making such material available to advance understanding of coding interview. We believe this constitute a "fair use" of any such copyrighted material as provided in Section 107 of the US Copyright Law. In accordance with Title 17 U.S.C Section 107, the material on this site is distributed without profit to those who have expressed a prior intereste in receiving the included information for research and educational purposes. For further information on fair use, go to https://www.law.cornell.edu/uscode/text/17/107
+If you wish to use copyrighted material from this site for purposes of your own that go beyond fair use, you must obtain permission from the copyright owner.
+
 # Chapter 6: Big O
 
 #### Space Complexity
